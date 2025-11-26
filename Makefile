@@ -1,3 +1,3 @@
 
 all:
-	gcc -W -W -W ft_nm.c
+	gcc -W -W -W -g ft_nm.c utils.c

@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nm.h                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/11/26 19:34:12 by ucolla           ###   ########.fr       */
+/*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
+/*   Updated: 2025/11/26 18:48:51 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_NM_H
-#define FT_NM_H
+#include "ft_nm.h"
 
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <stdio.h>
-#include <errno.h>
-#include <fcntl.h>
+int ft_strlen(char *str) {
+    int i = 0;
 
-#define ARGUMENTS_ERROR "Wrong number of arguments\n"
+    while (str[i])
+        i++;
 
-#define WRITE(string) \
-            int n = ft_strlen(string); \
-            write(1, string, n);
-
-int ft_strlen(char *str);            
-
-#endif
+    return i;
+}
