@@ -1,22 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_put_unsigned.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
-/*   Updated: 2025/11/26 18:48:51 by ucolla           ###   ########.fr       */
+/*   Created: 2023/11/05 11:47:16 by ucolla            #+#    #+#             */
+/*   Updated: 2023/11/05 15:25:07 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_printf.h"
 
-int ft_strlen(char *str) {
-    int i = 0;
+int	ft_put_unsigned(unsigned int n)
+{
+	int		i;
+	int		j;
+	char	print[20];
 
-    while (str[i])
-        i++;
-
-    return i;
+	i = 0;
+	if (n == 0)
+	{
+		write(1, "0", 1);
+		return (1);
+	}
+	while (n > 0)
+	{
+		print[i] = (n % 10) + '0';
+		n /= 10;
+		i++;
+	}
+	j = i;
+	i--;
+	while (i >= 0)
+	{
+		write(1, &print[i], 1);
+		i--;
+	}
+	return (j);
 }

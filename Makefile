@@ -1,3 +1,45 @@
+PATH_LIBFT:= libft
+LIBFT:= libft.a
 
-all:
-	gcc -W -W -W -g ft_nm.c utils.c
+PATH_PRINTF:= ft_printf
+FT_PRINTF:= libftprintf.a
+
+FLAGS:= -Wall -Werror -Wextra -g
+
+INCLUDES = -I./headers -I./libft -I./ft_printf
+
+FILES_LIST:= src/ft_nm \
+			src/utils
+
+FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
+
+FUNCTIONS_OBJ:= $(FUNCTIONS:.c=.o)
+
+NAME:= ft_nm
+
+all: $(NAME)
+
+%.o: %.c 
+	gcc -g $(FLAGS) $(INCLUDES) -c $< -o $@
+
+$(NAME): $(FUNCTIONS_OBJ)
+	@$(MAKE) -C $(PATH_LIBFT)
+	@$(MAKE) -C $(PATH_PRINTF)
+	gcc $(FLAGS) $(FUNCTIONS_OBJ) $(PATH_LIBFT)/$(LIBFT) $(PATH_PRINTF)/$(FT_PRINTF) -o $(NAME)
+	@echo "Compiled successfully!"
+	
+clean:
+	@$(MAKE) clean -C $(PATH_LIBFT)
+	@$(MAKE) clean -C $(PATH_PRINTF)
+	rm -f $(FUNCTIONS_OBJ)
+	@echo "Clean done"
+
+fclean: clean
+	@$(MAKE) fclean -C $(PATH_LIBFT)
+	@$(MAKE) fclean -C $(PATH_PRINTF)
+	rm -f $(NAME)
+	@echo "Full clean done"
+
+re: fclean all
+
+.PHONY: all clean fclean re
