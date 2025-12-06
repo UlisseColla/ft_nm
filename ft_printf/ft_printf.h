@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 14:35:13 by ucolla            #+#    #+#             */
-/*   Updated: 2023/11/05 12:27:46 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/06 19:43:54 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <limits.h>
 
 int	ft_printf(const char *str, ...);
-int	ft_strlen(char *s);
+int	pf_strlen(char *s);
 int	ft_putchar(char c);
 int	ft_putstr(char *s);
 int	ft_putnbr(long n);

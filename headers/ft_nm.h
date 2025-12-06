@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/05 19:09:06 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/06 19:40:44 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,19 @@
 #include <fcntl.h>
 #include <elf.h>
 #include "libft.h"
+#include "ft_printf.h"
 
 typedef Elf64_Ehdr elf_h;
 typedef Elf64_Shdr sec_h;
+typedef Elf64_Sym sym_h;
 
 #define ARGUMENTS_ERROR "Wrong number of arguments\n"
 
-#define WRITE(string) \
+/* #define WRITE(string) \
             int n = ft_strlen(string); \
-            write(1, string, n);
+            write(1, string, n); */
 
 void print_ekh_header(elf_h *ekh);
-void print_sec_header(sec_h *header);          
+void print_sec_header(sec_h *header);
 
 #endif

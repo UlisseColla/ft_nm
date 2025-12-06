@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/05 19:12:43 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/06 19:39:59 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int main(int ac, char **av) {
     
     if (ac != 2) {
-        WRITE(ARGUMENTS_ERROR);
+        ft_printf(ARGUMENTS_ERROR);
+        return -1;
     }
 
     int fd = open(av[ac - 1], O_RDONLY, S_IWUSR | S_IRUSR);
@@ -25,40 +26,65 @@ int main(int ac, char **av) {
         perror("Couldn't get file size\n");
     }
     
-    printf("File size is: %ld\n", file_stat.st_size);
+    printf("File size is: %ld\n\n", file_stat.st_size);
     
     char *file_bytes = NULL;
     
-    file_bytes = mmap(file_bytes, file_stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+    file_bytes = mmap(NULL, file_stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
     if (file_bytes == MAP_FAILED) {
-        strerror(errno);
+        perror("Error mapping file\n");
         return -1;
     }
 
     elf_h *elf_header = (elf_h *)file_bytes;
     print_ekh_header(elf_header);
 
-    sec_h *sec_header = (sec_h *)file_bytes + elf_header->e_shoff - 1;
-    print_sec_header(sec_header);
+    uint32_t str_tab_index = 0;
+    sym_h *symbol_array = NULL;
+    int symbols_count = 0;
+
+    sec_h *sec_header = (sec_h *)(file_bytes + elf_header->e_shoff);
+    for (int i = 0; i < elf_header->e_shnum; i++) {
+        switch(sec_header[i].sh_type) {
+            case SHT_SYMTAB:
+                printf("SECTION SHT_SYMTAB %d\n", i);
+                print_sec_header(&sec_header[i]);
+                str_tab_index = sec_header[i].sh_link;
+                symbol_array = (sym_h *)(file_bytes + sec_header[i].sh_offset);
+                symbols_count = sec_header[i].sh_size / sizeof(sym_h *);
+                printf("\n");
+                break;
+                
+            /* case SHT_STRTAB:
+                printf("SECTION SHT_STRTAB %d\n", i);
+                print_sec_header(&sec_header[i]);
+                printf("\n");
+                break;
+
+            case SHT_DYNSYM:
+                printf("SECTION SHT_DYNSYM %d\n", i);
+                print_sec_header(&sec_header[i]);
+                printf("\n");
+                break; */
+                
+            default: break;
+        }
+    }
+
+    char *str_table_data = (char *)(file_bytes + sec_header[str_tab_index].sh_offset);
+    
+    for(int i = 0; i < symbols_count; i++) {
+        uint32_t offset = symbol_array[i].st_name;
+
+        if (offset != 0) {
+            printf("Symbol: %s\n", str_table_data + offset);
+        }
+    }
+
+    close(fd);
 
     return 0;
 }
-
-
-/* 
-typedef struct {
-    uint32_t   sh_name;
-    uint32_t   sh_type;
-    uint64_t   sh_flags;
-    Elf64_Addr sh_addr;
-    Elf64_Off  sh_offset;
-    uint64_t   sh_size;
-    uint32_t   sh_link;
-    uint32_t   sh_info;
-    uint64_t   sh_addralign;
-    uint64_t   sh_entsize;
-} Elf64_Shdr; 
-*/
 
 /* 
 unsigned char e_ident[EI_NIDENT];

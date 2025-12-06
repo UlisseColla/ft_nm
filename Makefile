@@ -4,7 +4,7 @@ LIBFT:= libft.a
 PATH_PRINTF:= ft_printf
 FT_PRINTF:= libftprintf.a
 
-FLAGS:= -Wall -Werror -Wextra -g
+FLAGS:= -g -Wall -Werror -Wextra 
 
 INCLUDES = -I./headers -I./libft -I./ft_printf
 
@@ -39,6 +39,12 @@ fclean: clean
 	@$(MAKE) fclean -C $(PATH_PRINTF)
 	rm -f $(NAME)
 	@echo "Full clean done"
+
+run:
+	clear && ./ft_nm ft_nm
+
+debug:
+	clear && gdb --args ./ft_nm ft_nm
 
 re: fclean all
 

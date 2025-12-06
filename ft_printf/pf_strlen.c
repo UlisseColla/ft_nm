@@ -6,13 +6,13 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 12:09:53 by ucolla            #+#    #+#             */
-/*   Updated: 2023/11/05 12:23:09 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/06 19:43:22 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_strlen(char *s)
+int	pf_strlen(char *s)
 {
 	int	i;
 
