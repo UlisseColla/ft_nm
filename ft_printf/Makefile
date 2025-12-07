@@ -3,7 +3,7 @@ FLAGS:= -Wall -Werror -Wextra
 NAME:= libftprintf.a
 
 FILES:= ft_printf \
-		pf_strlen \
+		ft_strlength \
 		ft_putchar \
 		ft_putstr \
 		ft_putnbr \
