@@ -41,7 +41,7 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	clear && ./ft_nm libft.a
+	clear && ./ft_nm ./src/ft_nm.o
 
 debug:
 	clear && gdb --args ./ft_nm ft_nm

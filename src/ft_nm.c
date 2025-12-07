@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/07 16:49:18 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/07 17:47:58 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,20 @@ int main(int ac, char **av) {
     }
 
     char *str_table_data = (char *)(file_bytes + sec_header[str_tab_index].sh_offset);
-    uint32_t start = str_table_data - file_bytes;
     
     printf("sec_header[i].sh_size: %ld - sizeof(sym_h): %ld\n", sh_symtab->sh_size, sizeof(sym_h));
     printf("Total symbols found: %d\n\n", symbols_count);
+    
     for(int i = 0; i < symbols_count; i++) {
         uint32_t offset = symbol_array[i].st_name;
+        uint64_t value = symbol_array[i].st_value;
+        uint8_t info = ELF64_ST_TYPE(symbol_array[i].st_info);
 
         if (offset != 0) {
-            printf("Symbol n.%d at offset: %d | %s |\n", i, start + offset, str_table_data + offset);
+            if (value != 0) {
+                printf("%lx - ", value);
+            }
+            printf("info: %x - %s\n", info, str_table_data + offset);
         }
     }
 
