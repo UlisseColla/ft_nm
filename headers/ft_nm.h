@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/06 19:40:44 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/09 17:42:26 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,47 @@
 #include <errno.h>
 #include <string.h>
 #include <fcntl.h>
+#include <stdbool.h>
 #include <elf.h>
 #include "libft.h"
 #include "ft_printf.h"
+
+typedef enum architecture {
+    ARCH_32, ARCH_64 
+}   Arch;
+
+typedef enum lexer_status {
+    OK, FILENAME, ERROR 
+}   Status;
+
+typedef enum sorting {
+    ALPHA, REVERSE, UNSORTED 
+}   Sort;
+
+typedef enum filter {
+    DEFAULT, ALL, EXTERNAL, UNDEFINED
+}   Filter;
+
+typedef struct s_flags {
+    Filter  filter;
+    Sort    sort;
+}   Flags;
 
 typedef Elf64_Ehdr elf_h;
 typedef Elf64_Shdr sec_h;
 typedef Elf64_Sym sym_h;
 
-#define ARGUMENTS_ERROR "Wrong number of arguments\n"
-
-/* #define WRITE(string) \
-            int n = ft_strlen(string); \
-            write(1, string, n); */
+#define ARGUMENTS_ERROR     "Usage: nm [option(s)] [file(s)]\n \
+List symbols in [file(s)] (a.out by default).\n \
+The options are:\n \
+-a,     Display debugger-only symbols\n \
+-g,     Display only external symbols\n \
+-u,     Display only undefined symbols\n \
+-r,     Reverse the sense of the sort\n \
+-p,     Do not sort the symbols\n\n"
 
 void print_ekh_header(elf_h *ekh);
 void print_sec_header(sec_h *header);
+t_list *args_lexer(char **av, int ac, Flags *flags);
 
 #endif

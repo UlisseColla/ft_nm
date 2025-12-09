@@ -9,7 +9,8 @@ FLAGS:= -g -Wall -Werror -Wextra
 INCLUDES = -I./headers -I./libft -I./ft_printf
 
 FILES_LIST:= src/ft_nm \
-			src/utils
+			src/utils \
+			src/args_lexer
 
 FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
 
@@ -23,7 +24,7 @@ all: $(NAME)
 	gcc -g $(FLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(FUNCTIONS_OBJ)
-	@$(MAKE) -C $(PATH_LIBFT)
+	@$(MAKE) -C $(PATH_LIBFT) bonus
 	@$(MAKE) -C $(PATH_PRINTF)
 	gcc $(FLAGS) $(FUNCTIONS_OBJ) $(PATH_LIBFT)/$(LIBFT) $(PATH_PRINTF)/$(FT_PRINTF) -o $(NAME)
 	@echo "Compiled successfully!"
@@ -41,7 +42,7 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	clear && ./ft_nm ./src/ft_nm.o
+	clear && ./ft_nm ./src/ft_nm.o ciao a tutti
 
 debug:
 	clear && gdb --args ./ft_nm ft_nm

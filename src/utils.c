@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/06 19:33:14 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/09 14:16:48 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,6 @@
 void print_ekh_header(elf_h *ekh) {
     printf("ELF HEADER\n");
     printf("Header size: %d\n", ekh->e_ehsize);
-    /* printf("E_ident |");
-    for(int i = 0; i < (int)sizeof(ekh->e_ident); i++) {
-        printf("%x ", ekh[i]);
-    }
-    printf("|\n"); */
-
-    /* printf("Type: %d\n", ekh->e_type);
-    printf("Machine: %d\n", ekh->e_machine);
-    printf("Version: %d\n", ekh->e_version);
-    printf("Ph_off: %ld\n", ekh->e_phoff);
-    printf("Sh_off: %ld\n", ekh->e_shoff);
-    printf("Flags: %d\n", ekh->e_flags);
-    printf("Phentsize: %d\n", ekh->e_phentsize);
-    printf("Phnum: %d\n", ekh->e_phnum);
-    printf("Shentsize: %d\n", ekh->e_shentsize);
-    printf("Shnum: %d\n", ekh->e_shnum);
-    printf("Shstrndx: %d\n", ekh->e_shstrndx); */
 
     // 1. Types & Machine (Keep Hex, strictly 2 bytes -> 4 hex chars)
     printf("Type:      0x%04x\n", ekh->e_type);

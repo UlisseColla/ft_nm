@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/07 17:47:58 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/09 17:47:24 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,24 @@
 /**
  * 1. Hande multiple files as argument.
  * 2. Parser for the flags.
+ * 3. Handle a.out if no arguments
+ * 4. Distinguish between 32 and 64 bits architecture       DONE
  * */
 
 int main(int ac, char **av) {
-    
-    if (ac < 2) {
-        ft_printf(ARGUMENTS_ERROR);
-        return -1;
-    }
 
+    Arch arch = (sizeof(void *) * 8) == 64 ? ARCH_64 : ARCH_32;
+    printf("Architecture: %d\n", arch);
+
+    Flags flags = {};
+
+    t_list *files;
+    files = args_lexer(av, ac, &flags);
+
+    while(files->next) {
+        printf("File is: %s\n", (char *)files->content);
+    }
+    
     int fd = open(av[ac - 1], O_RDONLY, S_IWUSR | S_IRUSR);
     if (fd == -1) {
         ft_printf("nm: \'%s\' : %s\n", av[ac - 1], strerror(errno));
@@ -107,18 +116,18 @@ int main(int ac, char **av) {
 }
 
 /* 
-unsigned char e_ident[EI_NIDENT];
-uint16_t      e_type;
-uint16_t      e_machine;
-uint32_t      e_version;
-ElfN_Addr     e_entry;
-ElfN_Off      e_phoff;
-ElfN_Off      e_shoff;
-uint32_t      e_flags;
-uint16_t      e_ehsize;
-uint16_t      e_phentsize;
-uint16_t      e_phnum;
-uint16_t      e_shentsize;
-uint16_t      e_shnum;
-uint16_t      e_shstrndx; 
+    unsigned char e_ident[EI_NIDENT];
+    uint16_t      e_type;
+    uint16_t      e_machine;
+    uint32_t      e_version;
+    ElfN_Addr     e_entry;
+    ElfN_Off      e_phoff;
+    ElfN_Off      e_shoff;
+    uint32_t      e_flags;
+    uint16_t      e_ehsize;
+    uint16_t      e_phentsize;
+    uint16_t      e_phnum;
+    uint16_t      e_shentsize;
+    uint16_t      e_shnum;
+    uint16_t      e_shstrndx; 
 */
