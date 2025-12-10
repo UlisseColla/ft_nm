@@ -42,10 +42,13 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	clear && ./ft_nm ./src/ft_nm.o ciao a tutti
+	clear && ./ft_nm ./src/ft_nm.o
 
 debug:
 	clear && gdb --args ./ft_nm ft_nm
+
+valgrind:
+	clear && valgrind ./ft_nm ft_nm
 
 re: fclean all
 

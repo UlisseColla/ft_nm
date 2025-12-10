@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:15:55 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/09 17:50:52 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/10 11:41:44 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ bool set_flag_if_valid(char c, Flags *flags) {
 }
 
 enum lexer_status is_flag(char *str, Flags *flags) {
-    int i = 0;
+    int i = 1;
 
-    if (str[0] != '-') {
+    if (str[0] != '-' || (strcmp("-", &str[0]) == 0 && ft_strlen(str) == 1)) {
         return FILENAME;
     }
 
@@ -85,7 +85,7 @@ enum lexer_status is_flag(char *str, Flags *flags) {
         i++;
     }
 
-    if (i > 2) {
+    if (i >= 2) {
         print_error_message(str);
         return ERROR;
     }
@@ -101,8 +101,7 @@ enum lexer_status is_flag(char *str, Flags *flags) {
     return OK;
 }
 
-t_list *args_lexer(char **av, int ac, Flags *flags) {
-    t_list *head = NULL;
+void args_lexer(char **av, int ac, Flags *flags, t_list **files) {
     t_list *new;
 
     for (int i = 1; i < ac; i++) {
@@ -111,17 +110,11 @@ t_list *args_lexer(char **av, int ac, Flags *flags) {
                 break;
             case FILENAME:
                 new = ft_lstnew(av[i]);
-                if (head != NULL) {
-                    ft_lstadd_front(&head, new);
-                }
+                ft_lstadd_back(files, new);
                 break;
             case ERROR:
-                if (head != NULL) {
-                    clear_list(&head);
-                }
+                clear_list(files);
                 exit(1);
         }
     }
-
-    return head;
 }

@@ -6,32 +6,39 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/09 17:47:24 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/10 12:57:29 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
 /**
- * 1. Hande multiple files as argument.
- * 2. Parser for the flags.
+ * 1. Hande multiple files as argument.                     DONE
+ * 2. Parser for the flags.                                 DONE
  * 3. Handle a.out if no arguments
  * 4. Distinguish between 32 and 64 bits architecture       DONE
  * */
 
+ void debug_prints(t_list *files, Flags flags) {
+    while(files->next) {
+        printf("File is: %s\n", (char *)files->content);
+        files = files->next;
+    }
+    printf("File is: %s\n\n", (char *)files->content);
+    printf("Flag are - sort: %d - filter: %d\n", flags.sort, flags.filter);
+ }
+
 int main(int ac, char **av) {
 
-    Arch arch = (sizeof(void *) * 8) == 64 ? ARCH_64 : ARCH_32;
-    printf("Architecture: %d\n", arch);
+    /* Initial set up */
+    /* Arch arch = (sizeof(void *) * 8) == 64 ? ARCH_64 : ARCH_32;
 
     Flags flags = {};
 
-    t_list *files;
-    files = args_lexer(av, ac, &flags);
+    t_list *files =  NULL;
+    args_lexer(av, ac, &flags, &files);
 
-    while(files->next) {
-        printf("File is: %s\n", (char *)files->content);
-    }
+    debug_prints(files, flags); */
     
     int fd = open(av[ac - 1], O_RDONLY, S_IWUSR | S_IRUSR);
     if (fd == -1) {
@@ -76,7 +83,7 @@ int main(int ac, char **av) {
                 printf("\n");
                 break;
                 
-            /* case SHT_STRTAB:
+            case SHT_STRTAB:
                 printf("SECTION SHT_STRTAB %d\n", i);
                 print_sec_header(&sec_header[i]);
                 printf("\n");
@@ -86,7 +93,7 @@ int main(int ac, char **av) {
                 printf("SECTION SHT_DYNSYM %d\n", i);
                 print_sec_header(&sec_header[i]);
                 printf("\n");
-                break; */
+                break;
                 
             default: break;
         }
@@ -115,7 +122,7 @@ int main(int ac, char **av) {
     return 0;
 }
 
-/* 
+/*
     unsigned char e_ident[EI_NIDENT];
     uint16_t      e_type;
     uint16_t      e_machine;

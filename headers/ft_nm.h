@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/09 17:42:26 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/10 11:27:34 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ typedef Elf64_Ehdr elf_h;
 typedef Elf64_Shdr sec_h;
 typedef Elf64_Sym sym_h;
 
+#define str(x) #x
+#define xstr(x) str(x)
+
 #define ARGUMENTS_ERROR     "Usage: nm [option(s)] [file(s)]\n \
 List symbols in [file(s)] (a.out by default).\n \
 The options are:\n \
@@ -61,6 +64,6 @@ The options are:\n \
 
 void print_ekh_header(elf_h *ekh);
 void print_sec_header(sec_h *header);
-t_list *args_lexer(char **av, int ac, Flags *flags);
+void args_lexer(char **av, int ac, Flags *flags, t_list **files);
 
 #endif
