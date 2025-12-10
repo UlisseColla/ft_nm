@@ -10,7 +10,9 @@ INCLUDES = -I./headers -I./libft -I./ft_printf
 
 FILES_LIST:= src/ft_nm \
 			src/utils \
-			src/args_lexer
+			src/args_lexer \
+			src/get_address \
+			src/set_flag
 
 FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
 
@@ -42,13 +44,13 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	clear && ./ft_nm ./src/ft_nm.o
+	clear && ./ft_nm ft_nm
 
 debug:
-	clear && gdb --args ./ft_nm ft_nm
+	clear && gdb --args ./ft_nm ./src/ft_nm.o
 
 valgrind:
-	clear && valgrind ./ft_nm ft_nm
+	clear && valgrind ./ft_nm ./src/ft_nm.o
 
 re: fclean all
 
