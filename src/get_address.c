@@ -6,18 +6,24 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 17:45:06 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/10 18:13:57 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/11 18:59:29 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-char *get_address(uint64_t addr) {
+char *get_address(uint64_t addr, char flag) {
     uint8_t buf[16];
     char ret[16];
     char base[] = "0123456789abcdef";
     int l = 0;
-    int i = 0; 
+    int i = 0;
+
+    if (flag == 'U' && flag != 'w') return NULL;
+    if (addr == 0) {
+        printf("Value is 0, flag is %c\n", flag);
+        return ft_strdup("0000000000000000");
+    }
     
     while(addr) {
         buf[i] = addr % 16;

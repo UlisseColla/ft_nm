@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/10 18:39:26 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/11 18:48:45 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ The options are:\n \
 void print_ekh_header(elf_h *ekh);
 void print_sec_header(sec_h *header);
 void args_lexer(char **av, int ac, Flags *flags, t_list **files);
-char *get_address(uint64_t addr);
-char set_flag(uint8_t info, uint16_t shndx);
+char *get_address(uint64_t addr, char flag);
+char set_flag(uint8_t info, uint16_t shndx, char *sec_name);
+void print_line(symbol s);
 
 #endif

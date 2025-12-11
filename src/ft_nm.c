@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/10 19:30:31 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/11 18:57:29 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int main(int ac, char **av) {
         perror("Couldn't get file size\n");
     }
     
-    printf("File size is: %ld\n\n", file_stat.st_size);
-    
     char *file_bytes = NULL;
     
     file_bytes = mmap(NULL, file_stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
@@ -64,8 +62,7 @@ int main(int ac, char **av) {
 
     /* ELF header */
     elf_h *elf_header = (elf_h *)file_bytes;
-    print_ekh_header(elf_header);
-
+    // print_ekh_header(elf_header);
     
     /* Total amount of symbols */
     uint32_t str_tab_index = 0;
@@ -79,39 +76,35 @@ int main(int ac, char **av) {
 
     /* Section with sections names */
     sec_h *sh_str_tab = NULL;
-    int sh_str_tab_index;
-
-    /* Symbol table sh */
-    sec_h *sh_symtab = NULL;
+    sh_str_tab = &sec_header[elf_header->e_shstrndx];
     
     for (int i = 0; i < elf_header->e_shnum; i++) {
         switch(sec_header[i].sh_type) {
             case SHT_SYMTAB:
-                printf("SECTION SHT_SYMTAB %d\n", i);
-                print_sec_header(&sec_header[i]);
-                printf("\n");
+                // printf("SECTION SHT_SYMTAB %d\n", i);
+                // print_sec_header(&sec_header[i]);
+                // printf("\n");
                 
                 str_tab_index = sec_header[i].sh_link;
                 symbol_array = (sym_h *)(file_bytes + sec_header[i].sh_offset);
                 symbols_count = sec_header[i].sh_size / sizeof(sym_h);
-                sh_symtab = &sec_header[i];
                 
                 break;
                 
             case SHT_STRTAB:
-                printf("SECTION SHT_STRTAB %d\n", i);
-                print_sec_header(&sec_header[i]);
-                printf("\n");
+                // printf("SECTION SHT_STRTAB %d\n", i);
+                // print_sec_header(&sec_header[i]);
+                // printf("\n");
 
-                sh_str_tab = &sec_header[i];
-                sh_str_tab_index = sec_header[i].sh_link;
+                /* sh_str_tab = &sec_header[i];
+                sh_str_tab_index = sec_header[i].sh_link; */
 
                 break;
 
             case SHT_DYNSYM:
-                printf("SECTION SHT_DYNSYM %d\n", i);
-                print_sec_header(&sec_header[i]);
-                printf("\n");
+                // printf("SECTION SHT_DYNSYM %d\n", i);
+                // print_sec_header(&sec_header[i]);
+                // printf("\n");
                 break;
                 
             default: break;
@@ -120,36 +113,43 @@ int main(int ac, char **av) {
 
     /* String table to find the actual string for the symbols */
     char *str_table_data = (char *)(file_bytes + sec_header[str_tab_index].sh_offset);
-    char *str_table_section_names = (char *)(file_bytes + sec_header[sh_str_tab_index].sh_offset);
-    
-    printf("Total symbols found: %d\n\n", symbols_count);
-    
+    char *str_table_section_names = (char *)(file_bytes + sh_str_tab->sh_offset);
+
+    symbol *total_symbols = (symbol *)malloc(symbols_count * (sizeof(symbol)));
+
     /* Loop through symbols */
+    int l = 0;
     for(int i = 0; i < symbols_count; i++) {
         uint32_t offset = symbol_array[i].st_name;
         uint64_t value = symbol_array[i].st_value;
         uint16_t shndx = symbol_array[i].st_shndx;
         uint8_t info = ELF64_ST_TYPE(symbol_array[i].st_info);
-        char *section_name;
-
+        char *section_name = NULL;
+        char *addr;
         char flag;
 
-        flag = set_flag(info, shndx);
-        (void)flag;
-        
-        /* section_name = str_table_section_names */ /* To be finished */
-
         if (offset != 0) {
-            if (value != 0) {
-                char *addr = get_address(value);
-                for (int i = 0; i < (16 - (int)ft_strlen(addr)); i++) {
-                    write(1, "0", 1);
-                }
-                printf("%s ", addr);
+            if (shndx < 50) {
+                section_name = str_table_section_names + sec_header[shndx].sh_name;
+                printf("offset: %d | value: %ld | shndx: %d -- %s\n", offset, value, shndx, str_table_data + offset);
             }
-            printf("%s\n", str_table_data + offset);
-            printf("shndx: %d\n\n", shndx);
+            flag = set_flag(info, shndx, section_name);
+    
+            if (value != 0) {
+                addr = get_address(value, flag);
+            } else {
+                addr = NULL;
+            }
+            
+            symbol new = {str_table_data + offset, addr, flag};
+            total_symbols[l] = new;
+            l++;
         }
+    }
+    printf("\n");
+
+    for(int i = 0; i < symbols_count; i++) {
+        print_line(total_symbols[i]);
     }
 
     close(fd);
@@ -158,18 +158,46 @@ int main(int ac, char **av) {
 }
 
 /*
-    unsigned char e_ident[EI_NIDENT];
-    uint16_t      e_type;
-    uint16_t      e_machine;
-    uint32_t      e_version;
-    ElfN_Addr     e_entry;
-    ElfN_Off      e_phoff;
-    ElfN_Off      e_shoff;
-    uint32_t      e_flags;
-    uint16_t      e_ehsize;
-    uint16_t      e_phentsize;
-    uint16_t      e_phnum;
-    uint16_t      e_shentsize;
-    uint16_t      e_shnum;
-    uint16_t      e_shstrndx; 
+    typedef struct {
+        unsigned char e_ident[EI_NIDENT];
+        uint16_t      e_type;
+        uint16_t      e_machine;
+        uint32_t      e_version;
+        ElfN_Addr     e_entry;
+        ElfN_Off      e_phoff;
+        ElfN_Off      e_shoff;
+        uint32_t      e_flags;
+        uint16_t      e_ehsize;
+        uint16_t      e_phentsize;
+        uint16_t      e_phnum;
+        uint16_t      e_shentsize;
+        uint16_t      e_shnum;
+        uint16_t      e_shstrndx;
+    } ElfN_Ehdr;
+*/
+
+/*
+    typedef struct {
+        uint32_t      st_name;
+        unsigned char st_info;
+        unsigned char st_other;
+        uint16_t      st_shndx;
+        Elf64_Addr    st_value;
+        uint64_t      st_size;
+    } Elf64_Sym; 
+ */
+
+/* 
+    typedef struct {
+        uint32_t   sh_name;
+        uint32_t   sh_type;
+        uint64_t   sh_flags;
+        Elf64_Addr sh_addr;
+        Elf64_Off  sh_offset;
+        uint64_t   sh_size;
+        uint32_t   sh_link;
+        uint32_t   sh_info;
+        uint64_t   sh_addralign;
+        uint64_t   sh_entsize;
+    } Elf64_Shdr; 
 */

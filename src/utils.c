@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/10 17:44:52 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/11 18:56:32 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,26 @@ void print_sec_header(sec_h *header) {
     printf("Entsize:        %ld (bytes)\n\n", header->sh_entsize);
 }
 
-/* typedef struct {
-    uint32_t      st_name;
-    unsigned char st_info;
-    unsigned char st_other;
-    uint16_t      st_shndx;
-    Elf64_Addr    st_value;
-    uint64_t      st_size;
-} Elf64_Sym; */
-
 /* 
-typedef struct {
-    uint32_t   sh_name;
-    uint32_t   sh_type;
-    uint64_t   sh_flags;
-    Elf64_Addr sh_addr;
-    Elf64_Off  sh_offset;
-    uint64_t   sh_size;
-    uint32_t   sh_link;
-    uint32_t   sh_info;
-    uint64_t   sh_addralign;
-    uint64_t   sh_entsize;
-} Elf64_Shdr; 
+typedef struct s_symbol {
+    char *name;
+    char *address;
+    char type;
+}   symbol;
 */
+
+void print_line(symbol s) {
+    if (s.name == NULL) return;
+    if (s.address != NULL) {
+        for (int i = 0; i < (16 - (int)ft_strlen(s.address)); i++) {
+            write(1, "0", 1);
+        }
+        ft_printf("%s", s.address);
+    } else {
+        for(int i = 0; i < 16; i++) {
+            write(1, " ", 1);
+        }
+    }
+    ft_printf(" %c ", s.type);
+    ft_printf("%s\n", s.name);
+}
