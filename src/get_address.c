@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 17:45:06 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/11 18:59:29 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/12 14:47:14 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ char *get_address(uint64_t addr, char flag) {
     int l = 0;
     int i = 0;
 
-    if (flag == 'U' && flag != 'w') return NULL;
+    if (flag == 'U' || flag == 'w') return NULL;
     if (addr == 0) {
-        printf("Value is 0, flag is %c\n", flag);
         return ft_strdup("0000000000000000");
     }
     
