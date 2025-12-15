@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/12 14:50:17 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/15 19:13:46 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ int main(int ac, char **av) {
     }
     
     char *file_bytes = NULL;
+    size_t file_size = file_stat.st_size;
     
-    file_bytes = mmap(NULL, file_stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+    file_bytes = mmap(NULL, file_size, PROT_READ, MAP_PRIVATE, fd, 0);
     if (file_bytes == MAP_FAILED) {
         perror("Error when mapping the file\n");
         return -1;
@@ -77,6 +78,7 @@ int main(int ac, char **av) {
     /* Section with sections names */
     sec_h *sh_str_tab = NULL;
     sh_str_tab = &sec_header[elf_header->e_shstrndx];
+    (void)sh_str_tab;
     
     for (int i = 0; i < elf_header->e_shnum; i++) {
         switch(sec_header[i].sh_type) {
@@ -113,7 +115,6 @@ int main(int ac, char **av) {
 
     /* String table to find the actual string for the symbols */
     char *str_table_data = (char *)(file_bytes + sec_header[str_tab_index].sh_offset);
-    char *str_table_section_names = (char *)(file_bytes + sh_str_tab->sh_offset);
 
     symbol *total_symbols = (symbol *)malloc(symbols_count * (sizeof(symbol)));
 
@@ -122,19 +123,13 @@ int main(int ac, char **av) {
     for(int i = 0; i < symbols_count; i++) {
         uint32_t offset = symbol_array[i].st_name;
         uint64_t value = symbol_array[i].st_value;
-        uint16_t shndx = symbol_array[i].st_shndx;
-        uint8_t info = symbol_array[i].st_info;
-        char *section_name = NULL;
         char *addr = NULL;
         char flag;
 
-        if (offset != 0 && shndx < 50) {
-            section_name = str_table_section_names + sec_header[shndx].sh_name;
-            // printf("sec_name: %s | value: %ld | shndx: %d -- %s\n", section_name, value, shndx, str_table_data + offset);
-            
-            flag = set_flag(info, shndx, section_name);
+        if (offset != 0 && (void *)&sec_header[symbol_array[i].st_shndx] < (void *)file_bytes + file_size) {            
+            flag = set_flag(&symbol_array[i], sec_header, (file_bytes + file_size));
             addr = get_address(value, flag);
-            printf(" - %s\n", str_table_data + offset);
+            // printf(" - %s\n", str_table_data + offset);
             
             symbol new = {str_table_data + offset, addr, flag};
             total_symbols[l] = new;
@@ -143,9 +138,9 @@ int main(int ac, char **av) {
     }
     // printf("\n");
 
-    /* for(int i = 0; i < symbols_count; i++) {
+    for(int i = 0; i < symbols_count; i++) {
         print_line(total_symbols[i]);
-    } */
+    }
 
     close(fd);
 

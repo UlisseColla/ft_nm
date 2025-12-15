@@ -19,7 +19,7 @@ FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
 FUNCTIONS_OBJ:= $(FUNCTIONS:.c=.o)
 
 NAME:= ft_nm
-TEST:= ft_nm #./src/ft_nm.o
+TEST:= ./binaries/bin1_x64 #./src/ft_nm.o
 
 all: $(NAME)
 
@@ -45,7 +45,7 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	clear && ./ft_nm $(TEST) #> ft_nm.txt
+	clear && ./ft_nm $(TEST) > ft_nm.txt
 
 debug:
 	clear && gdb --args ./ft_nm $(TEST)
