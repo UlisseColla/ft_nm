@@ -5,189 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/15 19:13:46 by ucolla           ###   ########.fr       */
+/*   Created: 2025/12/16 18:29:31 by ucolla            #+#    #+#             */
+/*   Updated: 2025/12/16 19:52:36 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-/**
- * 1. Hande multiple files as argument.                     DONE
- * 2. Parser for the flags.                                 DONE
- * 3. Handle a.out if no arguments
- * 4. Distinguish between 32 and 64 bits architecture       DONE
- * */
+/* 
+typedef struct s_file_info {
+    char *file_name;
+    char *elf_file;
+    size_t file_size;
+    Arch arch;
+}   file_info;
+*/
 
- void debug_prints(t_list *files, Flags flags) {
-    while(files->next) {
-        printf("File is: %s\n", (char *)files->content);
-        files = files->next;
-    }
-    printf("File is: %s\n\n", (char *)files->content);
-    printf("Flag are - sort: %d - filter: %d\n", flags.sort, flags.filter);
- }
-
-int main(int ac, char **av) {
-
-    /* Initial set up */
-    /* Arch arch = (sizeof(void *) * 8) == 64 ? ARCH_64 : ARCH_32;
-
-    Flags flags = {};
-
-    t_list *files =  NULL;
-    args_lexer(av, ac, &flags, &files);
-
-    debug_prints(files, flags); */
-    
-    int fd = open(av[ac - 1], O_RDONLY, S_IWUSR | S_IRUSR);
-    if (fd == -1) {
-        ft_printf("nm: \'%s\' : %s\n", av[ac - 1], strerror(errno));
-        exit(1);
-    }
-    
-    struct stat file_stat;
-    
-    if (fstat(fd, &file_stat) == -1) {
-        perror("Couldn't get file size\n");
-    }
-    
-    char *file_bytes = NULL;
-    size_t file_size = file_stat.st_size;
-    
-    file_bytes = mmap(NULL, file_size, PROT_READ, MAP_PRIVATE, fd, 0);
-    if (file_bytes == MAP_FAILED) {
-        perror("Error when mapping the file\n");
-        return -1;
-    }
-
-    /* ELF header */
-    elf_h *elf_header = (elf_h *)file_bytes;
-    // print_ekh_header(elf_header);
-    
+int ft_nm(file_info *info, Flags flags) {
     /* Total amount of symbols */
     uint32_t str_tab_index = 0;
 
     /* Array of symbols */
-    sym_h *symbol_array = NULL;
+    sym_64 *symbol_array = NULL;
     int symbols_count = 0;
 
-    /* Sections header's table, i.e the array of section headers */
-    sec_h *sec_header = (sec_h *)(file_bytes + elf_header->e_shoff);
-
-    /* Section with sections names */
-    sec_h *sh_str_tab = NULL;
-    sh_str_tab = &sec_header[elf_header->e_shstrndx];
-    (void)sh_str_tab;
+    elf_64 *header = (elf_64 *)info->elf_file;
+    /* Checks on elf header's values */
     
-    for (int i = 0; i < elf_header->e_shnum; i++) {
-        switch(sec_header[i].sh_type) {
-            case SHT_SYMTAB:
-                // printf("SECTION SHT_SYMTAB %d\n", i);
-                // print_sec_header(&sec_header[i]);
-                // printf("\n");
-                
-                str_tab_index = sec_header[i].sh_link;
-                symbol_array = (sym_h *)(file_bytes + sec_header[i].sh_offset);
-                symbols_count = sec_header[i].sh_size / sizeof(sym_h);
-                
-                break;
-                
-            case SHT_STRTAB:
-                // printf("SECTION SHT_STRTAB %d\n", i);
-                // print_sec_header(&sec_header[i]);
-                // printf("\n");
-
-                /* sh_str_tab = &sec_header[i];
-                sh_str_tab_index = sec_header[i].sh_link; */
-
-                break;
-
-            case SHT_DYNSYM:
-                // printf("SECTION SHT_DYNSYM %d\n", i);
-                // print_sec_header(&sec_header[i]);
-                // printf("\n");
-                break;
-                
-            default: break;
-        }
-    }
-
-    /* String table to find the actual string for the symbols */
-    char *str_table_data = (char *)(file_bytes + sec_header[str_tab_index].sh_offset);
-
-    symbol *total_symbols = (symbol *)malloc(symbols_count * (sizeof(symbol)));
-
-    /* Loop through symbols */
-    int l = 0;
-    for(int i = 0; i < symbols_count; i++) {
-        uint32_t offset = symbol_array[i].st_name;
-        uint64_t value = symbol_array[i].st_value;
-        char *addr = NULL;
-        char flag;
-
-        if (offset != 0 && (void *)&sec_header[symbol_array[i].st_shndx] < (void *)file_bytes + file_size) {            
-            flag = set_flag(&symbol_array[i], sec_header, (file_bytes + file_size));
-            addr = get_address(value, flag);
-            // printf(" - %s\n", str_table_data + offset);
-            
-            symbol new = {str_table_data + offset, addr, flag};
-            total_symbols[l] = new;
-            l++;
-        }
-    }
-    // printf("\n");
-
-    for(int i = 0; i < symbols_count; i++) {
-        print_line(total_symbols[i]);
-    }
-
-    close(fd);
-
-    return 0;
+    sec_64 *sec_headers = (sec_64 *)(info->elf_file + header->e_shoff);
+    
+    
 }
-
-/*
-    typedef struct {
-        unsigned char e_ident[EI_NIDENT];
-        uint16_t      e_type;
-        uint16_t      e_machine;
-        uint32_t      e_version;
-        ElfN_Addr     e_entry;
-        ElfN_Off      e_phoff;
-        ElfN_Off      e_shoff;
-        uint32_t      e_flags;
-        uint16_t      e_ehsize;
-        uint16_t      e_phentsize;
-        uint16_t      e_phnum;
-        uint16_t      e_shentsize;
-        uint16_t      e_shnum;
-        uint16_t      e_shstrndx;
-    } ElfN_Ehdr;
-*/
-
-/*
-    typedef struct {
-        uint32_t      st_name;
-        unsigned char st_info;
-        unsigned char st_other;
-        uint16_t      st_shndx;
-        Elf64_Addr    st_value;
-        uint64_t      st_size;
-    } Elf64_Sym; 
- */
-
-/* 
-    typedef struct {
-        uint32_t   sh_name;
-        uint32_t   sh_type;
-        uint64_t   sh_flags;
-        Elf64_Addr sh_addr;
-        Elf64_Off  sh_offset;
-        uint64_t   sh_size;
-        uint32_t   sh_link;
-        uint32_t   sh_info;
-        uint64_t   sh_addralign;
-        uint64_t   sh_entsize;
-    } Elf64_Shdr; 
-*/

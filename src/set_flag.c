@@ -6,50 +6,21 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:36:16 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/15 18:52:31 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/16 19:06:30 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
 /*  distinguish between 32 and 64 bits! */
-char set_flag(sym_h *sym, sec_h *sections, void *max) {
+char set_flag(sym_64 *sym, sec_64 *sections, void *max) {
     uint8_t type = ELF64_ST_TYPE(sym->st_info);
     uint8_t bind = ELF64_ST_BIND(sym->st_info);
     uint64_t shndx = sym->st_shndx;
 
-    sec_h *sym_sec = &(sections[shndx]);
+    sec_64 *sym_sec = &(sections[shndx]);
     if ((void *)sym_sec > max) return 'a';
     uint64_t readonly = !(sym_sec->sh_flags & SHF_WRITE);
-
-    /* Symbol is undefined */
-    /* if (shndx == SHN_UNDEF && binding != STB_WEAK) return 'U';
-    
-    if (binding == STB_WEAK) {
-        if (shndx == SHN_UNDEF) {
-            return 'w';
-        } else {
-            return 'W';
-        }
-    }
-    
-    if (shndx == SHN_COMMON) return binding == STB_GLOBAL ? 'C' : 'c'; */
-
-    /* if (ft_strncmp(sec_name, ".text", 5) == 0 ||
-        ft_strncmp(sec_name, ".init", 5) == 0 ||
-        ft_strncmp(sec_name, ".fini", 5) == 0
-    ) {
-        return binding == STB_GLOBAL ? 'T' : 't';
-    };
-    if (ft_strncmp(sec_name, ".rodata", 7) == 0) {
-        return binding == STB_GLOBAL ? 'R' : 'r';
-    };
-    if (ft_strncmp(sec_name, ".data", 5) == 0) {
-        return binding == STB_GLOBAL ? 'D' : 'd';
-    };
-    if (ft_strncmp(sec_name, ".bss", 4) == 0) {
-        return binding == STB_GLOBAL ? 'B' : 'b';
-    }; */
 
     if (shndx == SHN_ABS)
 		return 'a';
@@ -84,3 +55,32 @@ char set_flag(sym_h *sym, sec_h *sections, void *max) {
 
     return '?';
 }
+
+/* Symbol is undefined */
+    /* if (shndx == SHN_UNDEF && binding != STB_WEAK) return 'U';
+    
+    if (binding == STB_WEAK) {
+        if (shndx == SHN_UNDEF) {
+            return 'w';
+        } else {
+            return 'W';
+        }
+    }
+    
+    if (shndx == SHN_COMMON) return binding == STB_GLOBAL ? 'C' : 'c'; */
+
+    /* if (ft_strncmp(sec_name, ".text", 5) == 0 ||
+        ft_strncmp(sec_name, ".init", 5) == 0 ||
+        ft_strncmp(sec_name, ".fini", 5) == 0
+    ) {
+        return binding == STB_GLOBAL ? 'T' : 't';
+    };
+    if (ft_strncmp(sec_name, ".rodata", 7) == 0) {
+        return binding == STB_GLOBAL ? 'R' : 'r';
+    };
+    if (ft_strncmp(sec_name, ".data", 5) == 0) {
+        return binding == STB_GLOBAL ? 'D' : 'd';
+    };
+    if (ft_strncmp(sec_name, ".bss", 4) == 0) {
+        return binding == STB_GLOBAL ? 'B' : 'b';
+    }; */

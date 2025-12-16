@@ -8,10 +8,11 @@ FLAGS:= -g -Wall -Werror -Wextra
 
 INCLUDES = -I./headers -I./libft -I./ft_printf
 
-FILES_LIST:= src/ft_nm \
+FILES_LIST:= src/main \
+			src/ft_nm \
 			src/utils \
 			src/args_lexer \
-			src/get_address \
+			src/print \
 			src/set_flag
 
 FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
@@ -19,7 +20,7 @@ FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
 FUNCTIONS_OBJ:= $(FUNCTIONS:.c=.o)
 
 NAME:= ft_nm
-TEST:= ./binaries/bin1_x64 #./src/ft_nm.o
+TEST:= ./test/lib/lib1_shname_corrupted_x64.so #./src/ft_nm.o
 
 all: $(NAME)
 
@@ -45,7 +46,7 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	clear && ./ft_nm $(TEST) > ft_nm.txt
+	clear && ./ft_nm $(TEST) #> ft_nm.txt
 
 debug:
 	clear && gdb --args ./ft_nm $(TEST)
@@ -54,7 +55,7 @@ valgrind:
 	clear && valgrind ./ft_nm $(TEST)
 
 nm: 
-	clear & nm $(TEST) -p > nm.txt
+	clear & nm $(TEST) -p #> nm.txt
 
 diff: nm run
 	diff nm.txt ft_nm.txt

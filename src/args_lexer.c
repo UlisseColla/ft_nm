@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:15:55 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/10 11:41:44 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/16 19:02:14 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ enum lexer_status is_flag(char *str, Flags *flags) {
         i++;
     }
 
-    return OK;
+    return FLAG;
 }
 
 void args_lexer(char **av, int ac, Flags *flags, t_list **files) {
@@ -106,7 +106,7 @@ void args_lexer(char **av, int ac, Flags *flags, t_list **files) {
 
     for (int i = 1; i < ac; i++) {
         switch(is_flag(av[i], flags)) {
-            case OK:
+            case FLAG:
                 break;
             case FILENAME:
                 new = ft_lstnew(av[i]);

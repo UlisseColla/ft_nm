@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/15 18:51:56 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/16 19:06:30 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef enum architecture {
 }   Arch;
 
 typedef enum lexer_status {
-    OK, FILENAME, ERROR 
+    FLAG, FILENAME, ERROR 
 }   Status;
 
 typedef enum sorting {
@@ -46,9 +46,21 @@ typedef struct s_flags {
     Sort    sort;
 }   Flags;
 
-typedef Elf64_Ehdr elf_h;
-typedef Elf64_Shdr sec_h;
-typedef Elf64_Sym sym_h;
+/* 64 BITS */
+typedef Elf64_Ehdr elf_64;
+typedef Elf64_Shdr sec_64;
+typedef Elf64_Sym sym_64;
+/* 32 BITS */
+typedef Elf32_Ehdr elf_32;
+typedef Elf32_Shdr sec_32;
+typedef Elf32_Sym sym_32;
+
+typedef struct s_file_info {
+    char *file_name;
+    char *elf_file;
+    size_t file_size;
+    Arch arch;
+}   file_info;
 
 typedef struct s_symbol {
     char *name;
@@ -65,11 +77,15 @@ The options are:\n \
 -r,     Reverse the sense of the sort\n \
 -p,     Do not sort the symbols\n\n"
 
-void print_ekh_header(elf_h *ekh);
-void print_sec_header(sec_h *header);
+void print_ekh_header(elf_64 *ekh);
+void print_sec_64eader(sec_64 *header);
+void debug_prints(t_list *files, Flags flags);
+void print_line(symbol s);
 void args_lexer(char **av, int ac, Flags *flags, t_list **files);
 char *get_address(uint64_t addr, char flag);
-char set_flag(sym_h *sym, sec_h *sections, void *max);
-void print_line(symbol s);
+char set_flag(sym_64 *sym, sec_64 *sections, void *max);
+int check_arch(unsigned char *e_ident, file_info *info);
+void clear_list(t_list **list);
+int ft_nm(file_info *info, Flags flags);
 
 #endif
