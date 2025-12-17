@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/16 19:22:55 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/17 17:26:20 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int init_elf(file_info *info, char *file_path) {
     info->elf_file = file_bytes;
     close(fd);
 
-    ret = check_arch(file_bytes, &info);
+    ret = check_arch((unsigned char *)file_bytes, info);
     
     return ret;
 }

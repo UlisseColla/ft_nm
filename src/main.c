@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/16 19:08:20 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/17 17:23:17 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,68 +41,10 @@ int main(int ac, char **av) {
             return 1;
         }
 
-        
-        
+        status = ft_nm(&info, flags); 
     }
     
-    /* Total amount of symbols */
-    uint32_t str_tab_index = 0;
-
-    /* Array of symbols */
-    sym_64 *symbol_array = NULL;
-    int symbols_count = 0;
-
-    /* e. get the sections header's table, i.e the array of section headers */
-    sec_64 *sec_headers = (sec_64 *)(file_bytes + elf_64eader->e_shoff);
-    
-    for (int i = 0; i < elf_64eader->e_shnum; i++) {
-        switch(sec_64eader[i].sh_type) {
-            case SHT_SYMTAB:
-                str_tab_index = sec_64eader[i].sh_link;
-                symbol_array = (sym_64 *)(file_bytes + sec_64eader[i].sh_offset);
-                symbols_count = sec_64eader[i].sh_size / sizeof(sym_64);
-                break;
-                
-            case SHT_STRTAB:
-                break;
-
-            case SHT_DYNSYM:
-                break;
-                
-            default: break;
-        }
-    }
-
-    /* String table to find the actual string for the symbols */
-    char *str_table_data = (char *)(file_bytes + sec_64eader[str_tab_index].sh_offset);
-
-    symbol *total_symbols = (symbol *)malloc(symbols_count * (sizeof(symbol)));
-
-    /* Loop through symbols */
-    int l = 0;
-    for(int i = 0; i < symbols_count; i++) {
-        uint32_t offset = symbol_array[i].st_name;
-        uint64_t value = symbol_array[i].st_value;
-        char *addr = NULL;
-        char flag;
-
-        if (offset != 0 && (void *)&sec_64eader[symbol_array[i].st_shndx] < (void *)file_bytes + file_size) {            
-            flag = set_flag(&symbol_array[i], sec_64eader, (file_bytes + file_size));
-            addr = get_address(value, flag);
-            // printf(" - %s\n", str_table_data + offset);
-            
-            symbol new = {str_table_data + offset, addr, flag};
-            total_symbols[l] = new;
-            l++;
-        }
-    }
-    // printf("\n");
-
-    for(int i = 0; i < symbols_count; i++) {
-        print_line(total_symbols[i]);
-    }
-
-    return status;
+    return SUCCESS;
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/16 19:06:30 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/17 17:27:08 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ typedef struct s_symbol {
     char type;
 }   symbol;
 
+#define SUCCESS 0
+#define FAILURE 1
+
 #define ARGUMENTS_ERROR     "Usage: nm [option(s)] [file(s)]\n \
 List symbols in [file(s)] (a.out by default).\n \
 The options are:\n \
@@ -87,5 +90,6 @@ char set_flag(sym_64 *sym, sec_64 *sections, void *max);
 int check_arch(unsigned char *e_ident, file_info *info);
 void clear_list(t_list **list);
 int ft_nm(file_info *info, Flags flags);
+int init_elf(file_info *info, char *file_path);
 
 #endif

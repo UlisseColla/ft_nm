@@ -20,7 +20,7 @@ FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
 FUNCTIONS_OBJ:= $(FUNCTIONS:.c=.o)
 
 NAME:= ft_nm
-TEST:= ./test/lib/lib1_shname_corrupted_x64.so #./src/ft_nm.o
+TEST:= ft_nm #./test/lib/lib1_shname_corrupted_x64.so #./src/ft_nm.o
 
 all: $(NAME)
 
@@ -46,7 +46,7 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	clear && ./ft_nm $(TEST) #> ft_nm.txt
+	clear && ./ft_nm $(TEST) > ft_nm.txt
 
 debug:
 	clear && gdb --args ./ft_nm $(TEST)
@@ -55,10 +55,11 @@ valgrind:
 	clear && valgrind ./ft_nm $(TEST)
 
 nm: 
-	clear & nm $(TEST) -p #> nm.txt
+	clear & nm $(TEST) #> nm.txt
 
 diff: nm run
-	diff nm.txt ft_nm.txt
+	@diff nm.txt ft_nm.txt;	\
+	echo $$?
 
 re: fclean all
 
