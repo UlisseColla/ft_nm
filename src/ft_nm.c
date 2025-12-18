@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:29:31 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/17 18:57:51 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/18 19:14:02 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_file_info {
 
 void free_array(void **array, size_t size) {
     if (array == NULL || size <= 0) return;
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         free(array[i]);
         array[i] = NULL;
     }
@@ -80,12 +80,14 @@ int ft_nm(file_info *info, Flags flags) {
         }
     }
 
+    quick_sort(sym_struct_array, 0, symbols_count - 1);
+
     for(int i = 0; i < symbols_count; i++) {
         /* Flags to be used in here */
         (void)flags;
         print_line(sym_struct_array[i]);
     }
 
-    free_array(&sym_struct_array, symbols_count);
+    free_array((void **)&sym_struct_array, symbols_count);
     return 0;
 }

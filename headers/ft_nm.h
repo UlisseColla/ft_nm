@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/17 17:27:08 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/18 19:15:09 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,11 @@ int check_arch(unsigned char *e_ident, file_info *info);
 void clear_list(t_list **list);
 int ft_nm(file_info *info, Flags flags);
 int init_elf(file_info *info, char *file_path);
+
+int compare_strings(char *s1, char *s2);
+void swap_symbols(symbol *sym1, symbol *sym2);
+void quick_sort(symbol *array, int low, int high);
+
+// void quick_sort_int(int array[], int low, int high);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/17 17:23:17 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/18 19:05:23 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,23 @@ int main(int ac, char **av) {
 
         status = ft_nm(&info, flags); 
     }
+
+    /* int array[] = {1, 4, 6, 3, 15, 9, 8, 2, 10, 7};
+    printf("Array: ");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
     
-    return SUCCESS;
+    quick_sort_int(array, 0, 10 - 1);
+
+    printf("Array: ");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n"); */
+    
+    return status;
 }
 
 /*

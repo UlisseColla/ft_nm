@@ -13,7 +13,8 @@ FILES_LIST:= src/main \
 			src/utils \
 			src/args_lexer \
 			src/print \
-			src/set_flag
+			src/set_flag \
+			src/quick_sort
 
 FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
 
@@ -25,7 +26,7 @@ TEST:= ft_nm #./test/lib/lib1_shname_corrupted_x64.so #./src/ft_nm.o
 all: $(NAME)
 
 %.o: %.c 
-	gcc -g $(FLAGS) $(INCLUDES) -c $< -o $@
+	gcc $(FLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(FUNCTIONS_OBJ)
 	@$(MAKE) -C $(PATH_LIBFT) bonus
@@ -46,7 +47,7 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	clear && ./ft_nm $(TEST) > ft_nm.txt
+	clear && ./ft_nm $(TEST) #> ./diff/ft_nm.txt
 
 debug:
 	clear && gdb --args ./ft_nm $(TEST)
@@ -55,7 +56,7 @@ valgrind:
 	clear && valgrind ./ft_nm $(TEST)
 
 nm: 
-	clear & nm $(TEST) #> nm.txt
+	clear & nm $(TEST) #> ./diff/nm.txt
 
 diff: nm run
 	@diff nm.txt ft_nm.txt;	\
