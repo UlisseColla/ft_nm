@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:18:32 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/16 19:05:56 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/19 17:51:21 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,46 @@ void print_line(symbol s) {
     }
     ft_printf(" %c ", s.type);
     ft_printf("%s\n", s.name);
+}
+
+void print_symbols(int size, symbol *array, Flags flags) {
+    switch(flags.filter) {
+        case UNDEFINED:
+            for(int i = 0; i < size; i++) {
+                if (array[i].type == 'U') print_line(array[i]);
+            };
+            break;
+        case EXTERNAL:
+            /* to be finished */
+            break;
+        case ALL:
+            /* to be finished */
+            break;
+        default:
+            for(int i = 0; i < size; i++) {
+                print_line(array[i]);
+            };
+            break;
+    }
+}
+
+void print_symbols_r(int size, symbol *array, Flags flags) {
+    switch(flags.filter) {
+        case UNDEFINED:
+            for(int i = size - 1; i >= 0; i--) {
+                if (array[i].type == 'U') print_line(array[i]);
+            };
+            break;
+        case EXTERNAL:
+            /* to be finished */
+            break;
+        case ALL:
+            /* to be finished */
+            break;
+        default:
+            for(int i = size - 1; i >= 0; i--) {
+                print_line(array[i]);
+            };
+            break;
+    }
 }

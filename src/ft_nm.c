@@ -6,26 +6,20 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:29:31 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/18 19:14:02 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/19 17:53:00 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-/* 
-typedef struct s_file_info {
-    char *file_name;
-    char *elf_file;
-    size_t file_size;
-    Arch arch;
-}   file_info;
-*/
-
-void free_array(void **array, size_t size) {
+void free_array(void *array, size_t size) {
     if (array == NULL || size <= 0) return;
-    for (size_t i = 0; i < size; i++) {
-        free(array[i]);
-        array[i] = NULL;
+    size_t i = 0;
+    while(i < size) {
+        free(array);
+        array++;
+        array = NULL;
+        i++;
     }
 }
 
@@ -80,14 +74,14 @@ int ft_nm(file_info *info, Flags flags) {
         }
     }
 
-    quick_sort(sym_struct_array, 0, symbols_count - 1);
+    if (flags.sort != UNSORTED) quick_sort(sym_struct_array, 0, symbols_count - 1);
 
-    for(int i = 0; i < symbols_count; i++) {
-        /* Flags to be used in here */
-        (void)flags;
-        print_line(sym_struct_array[i]);
+    if (flags.sort == REVERSE) {
+        print_symbols_r(symbols_count, sym_struct_array, flags);
+    } else {
+        print_symbols(symbols_count, sym_struct_array, flags);
     }
 
-    free_array((void **)&sym_struct_array, symbols_count);
+    free_array((void *)sym_struct_array, symbols_count);
     return 0;
 }

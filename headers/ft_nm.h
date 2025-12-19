@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/18 19:15:09 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/19 17:52:13 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_symbol {
 #define ARGUMENTS_ERROR     "Usage: nm [option(s)] [file(s)]\n \
 List symbols in [file(s)] (a.out by default).\n \
 The options are:\n \
--a,     Display debugger-only symbols\n \
+-a,     Display also debugger-only symbols\n \
 -g,     Display only external symbols\n \
 -u,     Display only undefined symbols\n \
 -r,     Reverse the sense of the sort\n \
@@ -95,6 +95,9 @@ int init_elf(file_info *info, char *file_path);
 int compare_strings(char *s1, char *s2);
 void swap_symbols(symbol *sym1, symbol *sym2);
 void quick_sort(symbol *array, int low, int high);
+
+void print_symbols(int size, symbol *array, Flags flags);
+void print_symbols_r(int size, symbol *array, Flags flags);
 
 // void quick_sort_int(int array[], int low, int high);
 
