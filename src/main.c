@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/19 14:17:27 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/20 18:14:48 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,26 @@ int main(int ac, char **av) {
     args_lexer(av, ac, &flags, &files);
     /* debug_prints(files, flags); */
 
-    /* 2. Loop over files */
+    /* 2. Loop over files or a.out if no args */
     if (ft_lstsize(files) == 0) {
-        
-    }
-    for(int i = 0; i < ft_lstsize(files); files = files->next) {
-        file_info info = {};
-        status = init_elf(&info, files->content);
-        if (status == 1) {
-            clear_list(&files);
-            return 1;
-        }
+        /* a.out */
+    } else {
+        for(int i = 0; i < ft_lstsize(files); files = files->next) {
+            file_info info = {};
+            status = init_elf(&info, files->content);
+            if (status == 1) continue;
 
-        status = ft_nm(&info, flags); 
+            /* Check elf header */
+            status = check_elf(&info);
+            if (status == 1) continue;
+            
+            status = ft_nm(&info, flags); 
+
+            /* Remember to unmap the file! */
+        }
     }
     
+    clear_list(&files);
     return status;
 }
 
