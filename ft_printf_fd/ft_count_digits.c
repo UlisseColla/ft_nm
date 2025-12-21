@@ -6,11 +6,11 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 17:21:40 by ucolla            #+#    #+#             */
-/*   Updated: 2023/11/05 15:24:30 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/21 18:17:13 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
 int	ft_count_digits(int n)
 {

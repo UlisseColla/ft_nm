@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 14:29:24 by ucolla            #+#    #+#             */
-/*   Updated: 2023/11/06 11:42:27 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/21 18:26:16 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
 static int	check_type(char a, va_list args)
 {
@@ -33,7 +33,7 @@ static int	check_type(char a, va_list args)
 	return (0);
 }
 
-int	ft_printf(const char *str, ...)
+int	ft_printf_fd(int fd, const char *str, ...)
 {
 	va_list	args;
 	int		i;
@@ -50,7 +50,7 @@ int	ft_printf(const char *str, ...)
 		}
 		else
 		{
-			ft_putchar(*str);
+			write(fd, str, 1);
 			str++;
 			i++;
 		}

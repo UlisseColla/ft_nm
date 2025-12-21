@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:18:32 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/19 17:51:21 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/21 16:40:23 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ void print_line(symbol s) {
         for (int i = 0; i < (16 - (int)ft_strlen(s.address)); i++) {
             write(1, "0", 1);
         }
-        ft_printf("%s", s.address);
+        ft_printf_fd(1, "%s", s.address);
     } else {
         for(int i = 0; i < 16; i++) {
             write(1, " ", 1);
         }
     }
-    ft_printf(" %c ", s.type);
-    ft_printf("%s\n", s.name);
+    ft_printf_fd(1, " %c ", s.type);
+    ft_printf_fd(1, "%s\n", s.name);
 }
 
 void print_symbols(int size, symbol *array, Flags flags) {

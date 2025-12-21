@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:15:55 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/16 19:02:14 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/21 16:39:35 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void clear_list(t_list **list) {
 }
 
 void print_error_message(char *error) {
-    ft_printf("nm: invalid option %s\n", error);
-    ft_printf("%s", ARGUMENTS_ERROR);
+    ft_printf_fd(2, "nm: invalid option %s\n", error);
+    ft_printf_fd(2, "%s", ARGUMENTS_ERROR);
 }
 
 bool set_flag_if_valid(char c, Flags *flags) {

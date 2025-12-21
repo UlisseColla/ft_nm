@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf_fd.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 14:35:13 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/07 14:35:01 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/21 18:26:13 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@
 # include <stdint.h>
 # include <limits.h>
 
-int	ft_printf(const char *str, ...);
+int	ft_printf_fd(int fd, const char *str, ...);
 int	ft_strlength(char *s);
-int	ft_putchar(char c);
 int	ft_putstr(char *s);
 int	ft_putnbr(long n);
 int	ft_putnbr_base(unsigned int nbr, char *base);
 int	ft_putptr(uintptr_t ptr, char *base);
 int	ft_put_unsigned(unsigned int n);
 int	ft_count_digits(int n);
+
+static inline int ft_putchar(char c) {
+    write(1, &c, 1);
+	return 1;
+}
 
 #endif

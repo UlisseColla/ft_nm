@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/20 18:14:48 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/21 18:01:26 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ int main(int ac, char **av) {
     } else {
         for(int i = 0; i < ft_lstsize(files); files = files->next) {
             file_info info = {};
-            status = init_elf(&info, files->content);
-            if (status == 1) continue;
-
-            /* Check elf header */
-            status = check_elf(&info);
+            status = init_elf(&info, files->content);   /* init and check elf */
             if (status == 1) continue;
             
             status = ft_nm(&info, flags); 

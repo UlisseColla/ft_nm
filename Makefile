@@ -1,12 +1,12 @@
 PATH_LIBFT:= libft
 LIBFT:= libft.a
 
-PATH_PRINTF:= ft_printf
-FT_PRINTF:= libftprintf.a
+PATH_PRINTF:= ft_printf_fd
+FT_PRINTF:= libftprintffd.a
 
 FLAGS:= -g -Wall -Werror -Wextra 
 
-INCLUDES = -I./headers -I./libft -I./ft_printf
+INCLUDES = -I./headers -I./libft -I./ft_printf_fd
 
 FILES_LIST:= src/main \
 			src/ft_nm \

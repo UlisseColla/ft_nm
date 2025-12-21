@@ -1,10 +1,9 @@
 FLAGS:= -Wall -Werror -Wextra
 
-NAME:= libftprintf.a
+NAME:= libftprintffd.a
 
-FILES:= ft_printf \
+FILES:= ft_printf_fd \
 		ft_strlength \
-		ft_putchar \
 		ft_putstr \
 		ft_putnbr \
 		ft_putnbr_base \

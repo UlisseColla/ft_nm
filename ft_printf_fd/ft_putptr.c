@@ -1,37 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
+/*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 21:34:33 by ucolla            #+#    #+#             */
-/*   Updated: 2023/11/05 15:25:13 by ucolla           ###   ########.fr       */
+/*   Created: 2023/11/05 11:31:05 by ucolla            #+#    #+#             */
+/*   Updated: 2025/12/21 18:17:13 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
-int	ft_putnbr_base(unsigned int nbr, char *base)
+int	ft_putptr(uintptr_t ptr, char *base)
 {
 	int				k;
 	int				l;
-	int				nbr_to_print[20];
+	int				ptr_to_print[20];
 
 	k = 0;
-	if (nbr == 0)
+	if (!ptr)
 	{
-		write(1, "0", 1);
-		return (1);
+		write(1, "(nil)", 5);
+		return (5);
 	}
-	while (nbr)
+	while (ptr)
 	{
-		nbr_to_print[k] = nbr % 16;
-		nbr /= 16;
+		ptr_to_print[k] = ptr % 16;
+		ptr /= 16;
 		k++;
 	}
 	l = k;
+	write(1, "0x", 2);
 	while (--k >= 0)
-		ft_putchar(base[nbr_to_print[k]]);
-	return (l);
+		ft_putchar(base[ptr_to_print[k]]);
+	return (l + 2);
 }
+/* int main()
+{
+	ft_putptr(0, "0123456789abcdef");
+	printf("\n");
+	printf("%p\n", 0);
+} */

@@ -1,41 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put_unsigned.c                                  :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/05 11:47:16 by ucolla            #+#    #+#             */
-/*   Updated: 2023/11/05 15:25:07 by ucolla           ###   ########.fr       */
+/*   Created: 2023/05/27 21:34:33 by ucolla            #+#    #+#             */
+/*   Updated: 2025/12/21 18:17:13 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
-int	ft_put_unsigned(unsigned int n)
+int	ft_putnbr_base(unsigned int nbr, char *base)
 {
-	int		i;
-	int		j;
-	char	print[20];
+	int				k;
+	int				l;
+	int				nbr_to_print[20];
 
-	i = 0;
-	if (n == 0)
+	k = 0;
+	if (nbr == 0)
 	{
 		write(1, "0", 1);
 		return (1);
 	}
-	while (n > 0)
+	while (nbr)
 	{
-		print[i] = (n % 10) + '0';
-		n /= 10;
-		i++;
+		nbr_to_print[k] = nbr % 16;
+		nbr /= 16;
+		k++;
 	}
-	j = i;
-	i--;
-	while (i >= 0)
-	{
-		write(1, &print[i], 1);
-		i--;
-	}
-	return (j);
+	l = k;
+	while (--k >= 0)
+		ft_putchar(base[nbr_to_print[k]]);
+	return (l);
 }

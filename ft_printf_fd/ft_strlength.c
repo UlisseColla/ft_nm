@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_strlength.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 17:03:56 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/07 14:35:01 by ucolla           ###   ########.fr       */
+/*   Created: 2023/10/10 12:09:53 by ucolla            #+#    #+#             */
+/*   Updated: 2025/12/21 18:17:13 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
-int	ft_putstr(char *s)
+int	ft_strlength(char *s)
 {
-	int	len;
+	int	i;
 
-	if (!s)
-		return (ft_putstr("(null)"));
-	len = ft_strlength(s);
-	write(1, s, len);
-	return (len);
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }

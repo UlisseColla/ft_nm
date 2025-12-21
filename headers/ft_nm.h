@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/19 17:52:13 by ucolla           ###   ########.fr       */
+/*   Updated: 2025/12/21 18:17:13 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <stdbool.h>
 #include <elf.h>
 #include "libft.h"
-#include "ft_printf.h"
+#include "ft_printf_fd.h"
 
 typedef enum architecture {
     ARCH_32, ARCH_64 
@@ -87,7 +87,6 @@ void print_line(symbol s);
 void args_lexer(char **av, int ac, Flags *flags, t_list **files);
 char *get_address(uint64_t addr, char flag);
 char set_flag(sym_64 *sym, sec_64 *sections, void *max);
-int check_arch(unsigned char *e_ident, file_info *info);
 void clear_list(t_list **list);
 int ft_nm(file_info *info, Flags flags);
 int init_elf(file_info *info, char *file_path);
