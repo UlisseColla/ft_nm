@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
 /*   ft_nm.h                                            :+:      :+:    :+:   */
+/*                                                        :::      ::::::::   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,17 +13,17 @@
 #ifndef FT_NM_H
 #define FT_NM_H
 
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <stdio.h>
 #include <errno.h>
-#include <string.h>
 #include <fcntl.h>
 #include <stdbool.h>
-#include <elf.h>
-#include "libft.h"
+#include <stdio.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "ft_printf_fd.h"
+#include "libft.h"
+#include "./elf.h"
 
 typedef enum architecture {
     ARCH_32, ARCH_64 
