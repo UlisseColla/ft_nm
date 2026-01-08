@@ -1,0 +1,58 @@
+Section is: 
+Section is: .interp
+Section is: .note.gnu.property
+Section is: .note.gnu.build-id
+Section is: .note.ABI-tag
+Section is: .gnu.hash
+Section is: .dynsym
+Section is: .dynstr
+Section is: .gnu.version
+Section is: .gnu.version_r
+Section is: .rela.dyn
+Section is: .rela.plt
+Section is: .init
+Section is: .plt
+Section is: .plt.got
+Section is: .plt.sec
+Section is: .text
+Section is: .fini
+Section is: .rodata
+Section is: .eh_frame_hdr
+Section is: .eh_frame
+Section is: .init_array
+Section is: .fini_array
+Section is: .dynamic
+Section is: .got
+Section is: .data
+Section is: .bss
+Section is: .comment
+Section is: .debug_aranges
+Section is: .debug_info
+Section is: .debug_abbrev
+Section is: .debug_line
+Section is: .debug_str
+Section is: .debug_line_str
+Section is: .symtab
+Section is: .strtab
+Section is: .shstrtab
+Symbol: 
+Symbol: free
+Symbol: __libc_start_main
+Symbol: __errno_location
+Symbol: _ITM_deregisterTMCloneTable
+Symbol: puts
+Symbol: write
+Symbol: __stack_chk_fail
+Symbol: mmap
+Symbol: printf
+Symbol: close
+Symbol: strcmp
+Symbol: __gmon_start__
+Symbol: malloc
+Symbol: open
+Symbol: perror
+Symbol: exit
+Symbol: _ITM_registerTMCloneTable
+Symbol: strerror
+Symbol: fstat
+Symbol: __cxa_finalize

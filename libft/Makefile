@@ -17,7 +17,7 @@ $(NAME):
 	ar -rc $(NAME) $(OBJECTS-1) $(OBJECTS-2)
 	ranlib $(NAME)
 
-bonus: $(OBJECTS-B)
+bonus: $(OBJECTS-B) all
 	gcc $(FLAGS) -c $(patsubst %, %.c, $(BONUS))
 	ar -rc $(NAME) $(OBJECTS-B)
 	ranlib $(NAME)

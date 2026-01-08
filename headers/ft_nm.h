@@ -66,6 +66,7 @@ typedef struct s_symbol {
     char *name;
     char *address;
     char type;
+    unsigned char info;
 }   symbol;
 
 #define SUCCESS 0

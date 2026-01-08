@@ -22,15 +22,15 @@
 
 int	ft_printf_fd(int fd, const char *str, ...);
 int	ft_strlength(char *s);
-int	ft_putstr(char *s);
-int	ft_putnbr(long n);
-int	ft_putnbr_base(unsigned int nbr, char *base);
-int	ft_putptr(uintptr_t ptr, char *base);
-int	ft_put_unsigned(unsigned int n);
+int	ft_putstr(char *s, int fd);
+int	ft_putnbr(long n, int fd);
+int	ft_putnbr_base(unsigned int nbr, char *base, int fd);
+int	ft_putptr(uintptr_t ptr, char *base, int fd);
+int	ft_put_unsigned(unsigned int n, int fd);
 int	ft_count_digits(int n);
 
-static inline int ft_putchar(char c) {
-    write(1, &c, 1);
+static inline int ft_putchar(char c, int fd) {
+    write(fd, &c, 1);
 	return 1;
 }
 

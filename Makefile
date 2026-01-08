@@ -47,7 +47,7 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	clear && ./ft_nm $(TEST) #> ./diff/ft_nm.txt
+	clear && ./ft_nm $(TEST) -g > ./diff/ft_nm.txt
 
 debug:
 	clear && gdb --args ./ft_nm $(TEST)
@@ -56,7 +56,7 @@ valgrind:
 	clear && valgrind ./ft_nm $(TEST)
 
 nm: 
-	clear & nm $(TEST) #> ./diff/nm.txt
+	clear & nm $(TEST) -g > ./diff/nm.txt
 
 diff: nm run
 	@diff ./diff/nm.txt ./diff/ft_nm.txt;	\
