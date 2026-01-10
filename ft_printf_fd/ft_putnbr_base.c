@@ -12,7 +12,7 @@
 
 #include "ft_printf_fd.h"
 
-int	ft_putnbr_base(unsigned int nbr, char *base)
+int	ft_putnbr_base(unsigned int nbr, char *base, int fd)
 {
 	int				k;
 	int				l;
@@ -21,7 +21,7 @@ int	ft_putnbr_base(unsigned int nbr, char *base)
 	k = 0;
 	if (nbr == 0)
 	{
-		write(1, "0", 1);
+		write(fd, "0", 1);
 		return (1);
 	}
 	while (nbr)
@@ -32,6 +32,6 @@ int	ft_putnbr_base(unsigned int nbr, char *base)
 	}
 	l = k;
 	while (--k >= 0)
-		ft_putchar(base[nbr_to_print[k]]);
+		ft_putchar(base[nbr_to_print[k]], fd);
 	return (l);
 }

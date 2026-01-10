@@ -12,7 +12,7 @@
 
 #include "ft_printf_fd.h"
 
-int	ft_putptr(uintptr_t ptr, char *base)
+int	ft_putptr(uintptr_t ptr, char *base, int fd)
 {
 	int				k;
 	int				l;
@@ -21,7 +21,7 @@ int	ft_putptr(uintptr_t ptr, char *base)
 	k = 0;
 	if (!ptr)
 	{
-		write(1, "(nil)", 5);
+		write(fd, "(nil)", 5);
 		return (5);
 	}
 	while (ptr)
@@ -31,9 +31,9 @@ int	ft_putptr(uintptr_t ptr, char *base)
 		k++;
 	}
 	l = k;
-	write(1, "0x", 2);
+	write(fd, "0x", 2);
 	while (--k >= 0)
-		ft_putchar(base[ptr_to_print[k]]);
+		ft_putchar(base[ptr_to_print[k]], fd);
 	return (l + 2);
 }
 /* int main()

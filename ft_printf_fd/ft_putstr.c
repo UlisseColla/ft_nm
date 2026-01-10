@@ -12,13 +12,13 @@
 
 #include "ft_printf_fd.h"
 
-int	ft_putstr(char *s)
+int	ft_putstr(char *s, int fd)
 {
 	int	len;
 
 	if (!s)
-		return (ft_putstr("(null)"));
+		return (ft_putstr("(null)", fd));
 	len = ft_strlength(s);
-	write(1, s, len);
+	write(fd, s, len);
 	return (len);
 }

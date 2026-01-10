@@ -12,7 +12,7 @@
 
 #include "ft_printf_fd.h"
 
-int	ft_put_unsigned(unsigned int n)
+int	ft_put_unsigned(unsigned int n, int fd)
 {
 	int		i;
 	int		j;
@@ -21,7 +21,7 @@ int	ft_put_unsigned(unsigned int n)
 	i = 0;
 	if (n == 0)
 	{
-		write(1, "0", 1);
+		write(fd, "0", 1);
 		return (1);
 	}
 	while (n > 0)
@@ -34,7 +34,7 @@ int	ft_put_unsigned(unsigned int n)
 	i--;
 	while (i >= 0)
 	{
-		write(1, &print[i], 1);
+		write(fd, &print[i], 1);
 		i--;
 	}
 	return (j);

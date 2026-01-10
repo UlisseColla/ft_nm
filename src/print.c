@@ -87,7 +87,12 @@ void print_symbols(int size, symbol *array, Flags flags) {
             };
             break;
         case EXTERNAL:
-            /* to be finished */
+            for(int i = 0; i < size; i++) {
+                uint8_t bind = ELF64_ST_BIND(array[i].info);
+                if (bind == STB_GLOBAL || bind == STB_WEAK) {
+                    print_line(array[i]);
+                }
+            };
             break;
         case ALL:
             /* to be finished */
