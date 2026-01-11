@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/21 18:01:26 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/01/11 18:14:39 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * 1. Hande multiple files as argument.                     DONE
  * 2. Parser for the flags.                                 DONE
- * 3. Handle a.out if no arguments
+ * 3. Handle a.out if no arguments                          DONE
  * 4. Distinguish between 32 and 64 bits architecture       DONE
  * */
 
@@ -31,11 +31,13 @@ int main(int ac, char **av) {
 
     /* 2. Loop over files or a.out if no args */
     if (ft_lstsize(files) == 0) {
-        /* a.out */
+        file_info info = {};
+        status = init_elf(&info, "./a.out");
+        if (status == 1) return status; /* Cleaning to be done? */
     } else {
         for(int i = 0; i < ft_lstsize(files); files = files->next) {
             file_info info = {};
-            status = init_elf(&info, files->content);   /* init and check elf */
+            status = init_elf(&info, files->content);
             if (status == 1) continue;
             
             status = ft_nm(&info, flags); 

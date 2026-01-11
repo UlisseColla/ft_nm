@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:36:16 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/16 19:06:30 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/01/11 18:11:31 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,15 @@ char set_flag(sym_64 *sym, sec_64 *sections, void *max) {
     if ((void *)sym_sec > max) return 'a';
     uint64_t readonly = !(sym_sec->sh_flags & SHF_WRITE);
 
-    if (shndx == SHN_ABS)
-		return 'a';
+    // 1. Handle Absolute Symbols ('a' or 'A')
+    if (shndx == SHN_ABS) {
+        return (bind == STB_LOCAL) ? 'a' : 'A';
+    }
+
+    // 2. Handle File Symbols ('f')
+    /* if (type == STT_FILE) {
+        return 'f';
+    } */
 
     if (bind == STB_WEAK) {
 		if (type == STT_OBJECT)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*   ft_nm.h                                            :+:      :+:    :+:   */
 /*                                                        :::      ::::::::   */
+/*   ft_nm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/21 18:17:13 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/01/11 18:20:47 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef enum lexer_status {
 }   Status;
 
 typedef enum sorting {
-    ALPHA, REVERSE, UNSORTED 
+    ALPHABETICAL, REVERSE, UNSORTED 
 }   Sort;
 
 typedef enum filter {

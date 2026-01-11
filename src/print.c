@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:18:32 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/21 16:40:23 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/01/11 18:40:53 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,17 @@ void print_symbols(int size, symbol *array, Flags flags) {
         case EXTERNAL:
             for(int i = 0; i < size; i++) {
                 uint8_t bind = ELF64_ST_BIND(array[i].info);
-                if (bind == STB_GLOBAL || bind == STB_WEAK) {
-                    print_line(array[i]);
-                }
+                if (bind == STB_GLOBAL || bind == STB_WEAK) print_line(array[i]);
             };
             break;
         case ALL:
-            /* to be finished */
+            for(int i = 0; i < size; i++) {
+                print_line(array[i]);
+            };
             break;
         default:
             for(int i = 0; i < size; i++) {
+                if (array[i].type == 'a' || array[i].type == 'A') continue;
                 print_line(array[i]);
             };
             break;
@@ -113,13 +114,19 @@ void print_symbols_r(int size, symbol *array, Flags flags) {
             };
             break;
         case EXTERNAL:
-            /* to be finished */
+            for(int i = size - 1; i >= 0; i--) {
+                uint8_t bind = ELF64_ST_BIND(array[i].info);
+                if (bind == STB_GLOBAL || bind == STB_WEAK) print_line(array[i]);
+            };
             break;
         case ALL:
-            /* to be finished */
+            for(int i = size - 1; i >= 0; i--) {
+                print_line(array[i]);
+            };
             break;
         default:
             for(int i = size - 1; i >= 0; i--) {
+                if (array[i].type == 'a' || array[i].type == 'A') continue;
                 print_line(array[i]);
             };
             break;
