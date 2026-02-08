@@ -53,7 +53,7 @@ nm:
 	clear && nm $(TEST) -a
 
 diff_nm:
-	clear && nm $(TEST) > t1 && nm -a $(TEST) > t2; \
+	clear && nm $(TEST) > ./out/t1 && nm -a $(TEST) > ./out/t2; \
 	diff t1 t2 
 
 debug:
