@@ -6,30 +6,11 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:15:55 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/21 16:39:35 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 17:11:42 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
-
-/** 
- * Handling flags 'a g u r p'
- * 
- * a: all symbols, even debugging ones      FILTER
- * g: only external ones                    FILTER
- * u: undefined only                        FILTER  
- * r: reverse sorting order                 SORTING
- * p: symbols not sorted                    SORTING
- * 
- * -u wins on -g, which wins on -a | u -> g -> a
- * -p wins on -r, which wins on no sorting flag | p -> r -> no flag
- * 
- * '--', or more dashes, trigger an error message and stop the execution of the command
- * multiple flags can be considered if concatenated, before, between or after files
- * same flag multiple times count as one flag of that type -> -uuuuu --> -u
- * 
- * !! no flag means the symbols must be sorted in alphabetical order !!
- */
 
 void clear_list(t_list **list) {
     t_list *a;

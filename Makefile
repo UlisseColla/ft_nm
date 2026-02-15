@@ -21,7 +21,7 @@ FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
 FUNCTIONS_OBJ:= $(FUNCTIONS:.c=.o)
 
 NAME:= ft_nm
-TEST:= ./ft_nm ./test/lib/lib1_x32.so #./test/binaries/bin2_x32 #./test/lib/lib1_x64.so #./src/ft_nm.o
+TEST:= ./ft_nm #./test/lib/lib1_x32.so #./test/binaries/bin2_x32 #./test/lib/lib1_x64.so #./src/ft_nm.o
 
 all: $(NAME)
 
@@ -47,10 +47,10 @@ fclean: clean
 	@echo "Full clean done"
 
 run:
-	./ft_nm $(TEST) -a
+	@./ft_nm $(TEST) -a
 
 nm:
-	clear && nm $(TEST) -a
+	@clear && nm $(TEST) -a
 
 diff_nm:
 	clear && nm $(TEST) > ./out/t1 && nm -a $(TEST) > ./out/t2; \
@@ -60,7 +60,7 @@ debug:
 	clear && gdb --args ./ft_nm $(TEST)
 
 valgrind:
-	clear && valgrind ./ft_nm $(TEST)
+	clear && valgrind --leak-check=full ./ft_nm $(TEST)
 
 test_ft_nm:
 	clear && ./ft_nm $(TEST) -a > ./diff/ft_nm.txt

@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 18:57:35 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/19 14:16:27 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 17:12:55 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ static inline char to_lower(char c) {
     return c >= 'A'&& c <= 'Z'? c + 32 : c;
 }
 
-/**
- * skip _ and case insensitive.
- * If result is negative, s1 comes before s2, and viceversa.
- * If 0 they are equal.
- */
 int compare_strings(char *s1, char *s2) {
     if (!s1 || !s2) return -1;
 

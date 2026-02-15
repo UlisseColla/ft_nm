@@ -6,25 +6,30 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:29:31 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/15 16:17:27 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 17:11:51 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-/* void free_array(void *array, size_t size) {
-    if (array == NULL || size <= 0) return;
+static void free_symbol_payload(void *content) {
+    symbol *sym = (symbol *)content;
+    if (sym->address)
+        free(sym->address);
+}
+
+void free_array(void *array, size_t size, size_t elem_size, void (*del)(void *)) {
+    if (array == NULL) return;
     size_t i = 0;
-    while(i < size) {
-        free(array);
-        array++;
-        array = NULL;
+    unsigned char *ptr = (unsigned char *)array;
+    while(i < size && del != NULL) {
+        del(ptr + i * elem_size);
         i++;
     }
-} */
+    free(array);
+}
 
 int ft_nm(file_info *info, Flags flags) {
-    
     int symbols_count = 0;
     symbol *sym_struct_array = NULL;
 
@@ -89,6 +94,8 @@ int ft_nm(file_info *info, Flags flags) {
     } else {
         print_symbols(symbols_count, sym_struct_array, flags, info->arch);
     }
+
+    free_array(sym_struct_array, symbols_count, sizeof(symbol), free_symbol_payload);
 
     return 0;
 }
