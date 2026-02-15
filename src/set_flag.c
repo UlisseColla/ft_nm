@@ -6,21 +6,11 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:36:16 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/14 19:07:30 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 16:07:53 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
-
-/*  distinguish between 32 and 64 bits! */
-/**
- * st_info
- * st_shndx
- * st_value
- * 
- * sections * -> void *
- * (uint)
- */
 
 // 2. Handle File Symbols ('f')
 /* if (type == STT_FILE) {

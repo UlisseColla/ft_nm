@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2026/01/11 18:14:39 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 16:18:36 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int main(int ac, char **av) {
             status = init_elf(&info, files->content);
             if (status == 1) continue;
             
-            status = ft_nm(&info, flags); 
+            status = ft_nm(&info, flags);
+            if (files->next != NULL) write(1, "\n", 1);
 
             /* Remember to unmap the file! */
         }

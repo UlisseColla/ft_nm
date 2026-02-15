@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/14 19:15:01 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 16:00:20 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,9 @@ static int check_arch(unsigned char *e_ident, file_info *info) {
     switch(e_ident[EI_CLASS]) {
         case ELFCLASS32:
             info->arch = ARCH_32;
-            printf("ARCH_32");
             break;
         case ELFCLASS64:
             info->arch = ARCH_64;
-            printf("ARCH_64");
             break;
         default:
             write(2, "Invalid elf class, neither 64 bits nor 32 bits\n", 47);

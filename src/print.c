@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:18:32 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/14 19:13:04 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 16:08:09 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void debug_prints(t_list *files, Flags flags) {
     printf("Flag are - sort: %d - filter: %d\n", flags.sort, flags.filter);
 }
 
-void print_ekh_header(elf_64 *ekh) {
+/* void print_ekh_header(elf_64 *ekh) {
     printf("ELF HEADER\n");
     printf("Header size: %d\n", ekh->e_ehsize);
 
@@ -61,11 +61,10 @@ void print_sec_64eader(sec_64 *header) {
     printf("Link:           %d\n", header->sh_link);
     printf("Addraling:      0x%lx\n", header->sh_addralign);
     printf("Entsize:        %ld (bytes)\n\n", header->sh_entsize);
-}
+} */
 
 static void print_line(symbol s, Arch arch) {
     int format = arch == ARCH_32? 8 : 16;
-    printf("arch is: %d\n", format);
     if (s.name == NULL) return;
     if (s.address != NULL) {
         for (int i = 0; i < (format - (int)ft_strlen(s.address)); i++) {

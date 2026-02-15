@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:29:31 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/15 15:55:12 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 16:17:27 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int ft_nm(file_info *info, Flags flags) {
     
     int symbols_count = 0;
     symbol *sym_struct_array = NULL;
+
+    ft_printf_fd(1, "%s:\n", info->file_name);
     
     #define PROCESS_ELF(base) \
         elf_ ## base *header = (elf_ ## base *)info->elf_file; \
@@ -81,6 +83,12 @@ int ft_nm(file_info *info, Flags flags) {
     if (!sym_struct_array) return 0;
 
     if (flags.sort != UNSORTED) quick_sort(sym_struct_array, 0, symbols_count - 1);
+
+    if (flags.sort == REVERSE) {
+        print_symbols_r(symbols_count, sym_struct_array, flags, info->arch);
+    } else {
+        print_symbols(symbols_count, sym_struct_array, flags, info->arch);
+    }
 
     return 0;
 }
