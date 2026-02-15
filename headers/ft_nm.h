@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2026/01/11 18:20:47 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/14 19:02:32 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,9 @@ The options are:\n \
 void print_ekh_header(elf_64 *ekh);
 void print_sec_64eader(sec_64 *header);
 void debug_prints(t_list *files, Flags flags);
-void print_line(symbol s);
 void args_lexer(char **av, int ac, Flags *flags, t_list **files);
-char *get_address(uint64_t addr, char flag);
-char set_flag(sym_64 *sym, sec_64 *sections, void *max);
+char *get_address(uint64_t addr, char flag, Arch arch);
+char set_flag(void *sym, void *sections, void *max, Arch arch);
 void clear_list(t_list **list);
 int ft_nm(file_info *info, Flags flags);
 int init_elf(file_info *info, char *file_path);
@@ -96,8 +95,8 @@ int compare_strings(char *s1, char *s2);
 void swap_symbols(symbol *sym1, symbol *sym2);
 void quick_sort(symbol *array, int low, int high);
 
-void print_symbols(int size, symbol *array, Flags flags);
-void print_symbols_r(int size, symbol *array, Flags flags);
+void print_symbols(int size, symbol *array, Flags flags, Arch arch);
+void print_symbols_r(int size, symbol *array, Flags flags, Arch arch);
 
 // void quick_sort_int(int array[], int low, int high);
 

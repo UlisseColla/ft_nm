@@ -6,13 +6,13 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
-/*   Updated: 2025/12/21 18:13:52 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/14 19:15:01 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-char *get_address(uint64_t addr, char flag) { /* To check for 32 bits arch */
+char *get_address(uint64_t addr, char flag, Arch arch) { /* To check for 32 bits arch */
     uint8_t buf[16];
     char ret[16];
     char base[] = "0123456789abcdef";
@@ -21,7 +21,11 @@ char *get_address(uint64_t addr, char flag) { /* To check for 32 bits arch */
 
     if (flag == 'U' || flag == 'w') return NULL;
     if (addr == 0) {
-        return ft_strdup("0000000000000000");
+        if (arch == ARCH_32) {
+            return ft_strdup("00000000");
+        } else {
+            return ft_strdup("0000000000000000");
+        }
     }
     
     while(addr) {
@@ -72,38 +76,38 @@ typedef struct s_file_info {
 static int check_elf(file_info *info) {
     
     /* Check for leaks in get_address */
-    #define CHECK_ELF_HEADER(base)                                                                                                                      \
-            size_t ehsize_std = base == 64? 64 : 52;                                                                                                    \
-            elf_ ## base *header = (elf_ ## base *)info->elf_file;                                                                                      \
-            if (header->e_phoff > info->file_size) {                                                                                                    \
-                return ft_printf_fd(2, "Program header offset goes past the end of the file: e_phoff = 0x%s\n", get_address(header->e_phoff, '-'));     \
-            }                                                                                                                                           \
-            if (header->e_shoff > info->file_size) {                                                                                                    \
-                return ft_printf_fd(2, "Section header table goes past the end of the file: e_shoff = 0x%s\n", get_address(header->e_shoff, '-'));      \
-            }                                                                                                                                           \
-            if (header->e_ehsize != ehsize_std) {                                                                                                       \
-                return ft_printf_fd(2, "ft_nm: %s: File format not recognized\n", info->file_name);                                                     \
-            }                                                                                                                                           \
-            if (header->e_shentsize != sizeof(sec_ ## base)) {                                                                                          \
-                return ft_printf_fd(2, "Invalid e_shentsize in ELF header: %s\n", ft_itoa(header->e_shentsize));                                        \
-            }                                                                                                                                           \
-            if (header->e_version == EV_NONE || !header->e_shnum || !header->e_shoff ||                                                                 \
-                header->e_shoff + (header->e_shnum * sizeof(sec_ ## base)) > info->file_size) {                                                         \
-                    return ft_printf_fd(2, "Section table goes past the end of file\n");                                                                \
-            }                                                                                                                                           \
-            if (header->e_machine == EM_NONE){                                                                                                          \
-                return ft_printf_fd(2, "Architecture not handled\n");                                                                                   \
-            }                                                                                                                                           \
-            if (sizeof(elf_ ## base) >= info->file_size) {                                                                                              \
-                return ft_printf_fd(2, "Symbol table or string table not found\n");                                                                     \
-            }                                                                                                                                           \
-            if (header->e_ident[EI_CLASS] != ELFCLASS64 &&                                                                                              \
-                header->e_ident[EI_DATA] != ELFDATA2LSB &&                                                                                              \
-                header->e_type != ET_EXEC &&                                                                                                            \
-                header->e_type != ET_DYN) {                                                                                                             \
-                    return ft_printf_fd(2, "Symbol table or string table not found\n");                                                                 \
-            }                                                                                                                                           \
-            if (header->e_shnum >= SHN_LORESERVE) return ft_printf_fd(2, "Too many sections\n");                                                        \
+    #define CHECK_ELF_HEADER(base)                                                                                                                                  \
+            size_t ehsize_std = base == 64? 64 : 52;                                                                                                                \
+            elf_ ## base *header = (elf_ ## base *)info->elf_file;                                                                                                  \
+            if (header->e_phoff > info->file_size) {                                                                                                                \
+                return ft_printf_fd(2, "Program header offset goes past the end of the file: e_phoff = 0x%s\n", get_address(header->e_phoff, '-', info->arch));     \
+            }                                                                                                                                                       \
+            if (header->e_shoff > info->file_size) {                                                                                                                \
+                return ft_printf_fd(2, "Section header table goes past the end of the file: e_shoff = 0x%s\n", get_address(header->e_shoff, '-', info->arch));      \
+            }                                                                                                                                                       \
+            if (header->e_ehsize != ehsize_std) {                                                                                                                   \
+                return ft_printf_fd(2, "ft_nm: %s: File format not recognized\n", info->file_name);                                                                 \
+            }                                                                                                                                                       \
+            if (header->e_shentsize != sizeof(sec_ ## base)) {                                                                                                      \
+                return ft_printf_fd(2, "Invalid e_shentsize in ELF header: %s\n", ft_itoa(header->e_shentsize));                                                    \
+            }                                                                                                                                                       \
+            if (header->e_version == EV_NONE || !header->e_shnum || !header->e_shoff ||                                                                             \
+                header->e_shoff + (header->e_shnum * sizeof(sec_ ## base)) > info->file_size) {                                                                     \
+                    return ft_printf_fd(2, "Section table goes past the end of file\n");                                                                            \
+            }                                                                                                                                                       \
+            if (header->e_machine == EM_NONE){                                                                                                                      \
+                return ft_printf_fd(2, "Architecture not handled\n");                                                                                               \
+            }                                                                                                                                                       \
+            if (sizeof(elf_ ## base) >= info->file_size) {                                                                                                          \
+                return ft_printf_fd(2, "Symbol table or string table not found\n");                                                                                 \
+            }                                                                                                                                                       \
+            if (header->e_ident[EI_CLASS] != ELFCLASS64 &&                                                                                                          \
+                header->e_ident[EI_DATA] != ELFDATA2LSB &&                                                                                                          \
+                header->e_type != ET_EXEC &&                                                                                                                        \
+                header->e_type != ET_DYN) {                                                                                                                         \
+                    return ft_printf_fd(2, "Symbol table or string table not found\n");                                                                             \
+            }                                                                                                                                                       \
+            if (header->e_shnum >= SHN_LORESERVE) return ft_printf_fd(2, "Too many sections\n");                                                                    \
     
             
     if (info->arch == ARCH_32) {
@@ -134,9 +138,11 @@ static int check_arch(unsigned char *e_ident, file_info *info) {
     switch(e_ident[EI_CLASS]) {
         case ELFCLASS32:
             info->arch = ARCH_32;
+            printf("ARCH_32");
             break;
         case ELFCLASS64:
             info->arch = ARCH_64;
+            printf("ARCH_64");
             break;
         default:
             write(2, "Invalid elf class, neither 64 bits nor 32 bits\n", 47);

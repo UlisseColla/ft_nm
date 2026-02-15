@@ -21,7 +21,7 @@ FUNCTIONS:= $(patsubst %, %.c, $(FILES_LIST))
 FUNCTIONS_OBJ:= $(FUNCTIONS:.c=.o)
 
 NAME:= ft_nm
-TEST:= ./ft_nm #./test/binaries/bin2_x32 #./test/lib/lib1_x64.so #./src/ft_nm.o
+TEST:= ./ft_nm ./test/lib/lib1_x32.so #./test/binaries/bin2_x32 #./test/lib/lib1_x64.so #./src/ft_nm.o
 
 all: $(NAME)
 

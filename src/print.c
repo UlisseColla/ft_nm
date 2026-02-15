@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:18:32 by ucolla            #+#    #+#             */
-/*   Updated: 2026/01/11 18:40:53 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/14 19:13:04 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,17 @@ void print_sec_64eader(sec_64 *header) {
     printf("Entsize:        %ld (bytes)\n\n", header->sh_entsize);
 }
 
-void print_line(symbol s) {
+static void print_line(symbol s, Arch arch) {
+    int format = arch == ARCH_32? 8 : 16;
+    printf("arch is: %d\n", format);
     if (s.name == NULL) return;
     if (s.address != NULL) {
-        for (int i = 0; i < (16 - (int)ft_strlen(s.address)); i++) {
+        for (int i = 0; i < (format - (int)ft_strlen(s.address)); i++) {
             write(1, "0", 1);
         }
         ft_printf_fd(1, "%s", s.address);
     } else {
-        for(int i = 0; i < 16; i++) {
+        for(int i = 0; i < format; i++) {
             write(1, " ", 1);
         }
     }
@@ -79,55 +81,55 @@ void print_line(symbol s) {
     ft_printf_fd(1, "%s\n", s.name);
 }
 
-void print_symbols(int size, symbol *array, Flags flags) {
+void print_symbols(int size, symbol *array, Flags flags, Arch arch) {
     switch(flags.filter) {
         case UNDEFINED:
             for(int i = 0; i < size; i++) {
-                if (array[i].type == 'U') print_line(array[i]);
+                if (array[i].type == 'U') print_line(array[i], arch);
             };
             break;
         case EXTERNAL:
             for(int i = 0; i < size; i++) {
                 uint8_t bind = ELF64_ST_BIND(array[i].info);
-                if (bind == STB_GLOBAL || bind == STB_WEAK) print_line(array[i]);
+                if (bind == STB_GLOBAL || bind == STB_WEAK) print_line(array[i], arch);
             };
             break;
         case ALL:
             for(int i = 0; i < size; i++) {
-                print_line(array[i]);
+                print_line(array[i], arch);
             };
             break;
         default:
             for(int i = 0; i < size; i++) {
                 if (array[i].type == 'a' || array[i].type == 'A') continue;
-                print_line(array[i]);
+                print_line(array[i], arch);
             };
             break;
     }
 }
 
-void print_symbols_r(int size, symbol *array, Flags flags) {
+void print_symbols_r(int size, symbol *array, Flags flags, Arch arch) {
     switch(flags.filter) {
         case UNDEFINED:
             for(int i = size - 1; i >= 0; i--) {
-                if (array[i].type == 'U') print_line(array[i]);
+                if (array[i].type == 'U') print_line(array[i], arch);
             };
             break;
         case EXTERNAL:
             for(int i = size - 1; i >= 0; i--) {
                 uint8_t bind = ELF64_ST_BIND(array[i].info);
-                if (bind == STB_GLOBAL || bind == STB_WEAK) print_line(array[i]);
+                if (bind == STB_GLOBAL || bind == STB_WEAK) print_line(array[i], arch);
             };
             break;
         case ALL:
             for(int i = size - 1; i >= 0; i--) {
-                print_line(array[i]);
+                print_line(array[i], arch);
             };
             break;
         default:
             for(int i = size - 1; i >= 0; i--) {
                 if (array[i].type == 'a' || array[i].type == 'A') continue;
-                print_line(array[i]);
+                print_line(array[i], arch);
             };
             break;
     }

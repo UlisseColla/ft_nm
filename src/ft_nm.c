@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:29:31 by ucolla            #+#    #+#             */
-/*   Updated: 2026/01/11 18:36:21 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 15:46:53 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int ft_nm(file_info *info, Flags flags) {
         int is_valid_section = (shndx < header->e_shnum);
         
         if (is_special || is_valid_section) {            
-            flag = set_flag(&symbol_array[i], sec_headers, info->elf_file + info->file_size);
-            addr = get_address(value, flag);
+            flag = set_flag(&symbol_array[i], sec_headers, info->elf_file + info->file_size, info->arch);
+            addr = get_address(value, flag, info->arch);
             
             symbol new = {str_table_data + offset, addr, flag, symbol_array[i].st_info};
             sym_struct_array[l] = new;
@@ -98,9 +98,9 @@ int ft_nm(file_info *info, Flags flags) {
     } */
 
     if (flags.sort == REVERSE) {
-        print_symbols_r(symbols_count, sym_struct_array, flags);
+        print_symbols_r(symbols_count, sym_struct_array, flags, info->arch);
     } else {
-        print_symbols(symbols_count, sym_struct_array, flags);
+        print_symbols(symbols_count, sym_struct_array, flags, info->arch);
     }
 
     /* printf("\nDynanmic symbols section\n");

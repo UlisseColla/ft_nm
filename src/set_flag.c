@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:36:16 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/08 18:33:30 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/14 19:07:30 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,57 +21,54 @@
  * sections * -> void *
  * (uint)
  */
-char set_flag(void *sym, sec_64 *sections, void *max) {
 
-    #define SET_FLAG(base)                                                              \
-            uint8_t type = ELF64_ST_TYPE(((sym_ ## base ## *)sym)->st_info);            \
-            uint8_t bind = ELF64_ST_BIND(((sym_ ## base ## *)sym)->st_info);            \
-            uint64_t shndx = sym->st_shndx;                                             \
+// 2. Handle File Symbols ('f')
+/* if (type == STT_FILE) {
+    return 'f';
+} */
+char set_flag(void *sym, void *sections, void *max, Arch arch) {
 
-            sec_64 *sym_sec = &(sections[shndx]);
-            if ((void *)sym_sec > max) return 'a';
-            uint64_t readonly = !(sym_sec->sh_flags & SHF_WRITE);
+    #define SET_FLAG(base)                                                      \
+            uint8_t type = ELF64_ST_TYPE(((sym_ ## base *)sym)->st_info);       \
+            uint8_t bind = ELF64_ST_BIND(((sym_ ## base *)sym)->st_info);       \
+            uint64_t shndx = ((sym_ ## base *)sym)->st_shndx;                   \
+            uint64_t value = ((sym_ ## base *)sym)->st_value;                   \
+            sec_ ## base *sym_sec = &(((sec_ ## base *)sections)[shndx]);       \
+            if ((void *)sym_sec > max) return 'a';                              \
+            uint64_t readonly = !(sym_sec->sh_flags & SHF_WRITE);               \
+            if (shndx == SHN_ABS) {                                             \
+                return (bind == STB_LOCAL) ? 'a' : 'A';                         \
+            }                                                                   \
+            if (bind == STB_WEAK) {                                             \
+                if (type == STT_OBJECT)                                         \
+                    return value <= 0 ? 'v' : 'V';                              \
+                return value <= 0 ? 'w' : 'W';                                  \
+            }                                                                   \
+            if (sym_sec->sh_type == SHT_NOBITS) {                               \
+                return bind == STB_LOCAL ? 'b' : 'B';                           \
+            }                                                                   \
+            if (shndx == SHN_UNDEF) return 'U';                                 \
+            if (type == STT_NOTYPE || type == STT_OBJECT) {                     \
+                if (readonly)                                                   \
+                    return bind == STB_LOCAL ? 'r' : 'R';                       \
+                return bind == STB_LOCAL ? 'd' : 'D';                           \
+            }                                                                   \
+            switch (type) {                                                     \
+                case STT_COMMON:                                                \
+                    return bind == STB_LOCAL ? 'c' : 'C';                       \
+                case STT_FUNC:                                                  \
+                    return bind == STB_LOCAL ? 't' : 'T';                       \
+                default:                                                        \
+                    break;                                                      \
+            }                                                                   \
+            return '?';                                                         \
 
-            // 1. Handle Absolute Symbols ('a' or 'A')
-            if (shndx == SHN_ABS) {
-                return (bind == STB_LOCAL) ? 'a' : 'A';
-            }
-
-            // 2. Handle File Symbols ('f')
-            /* if (type == STT_FILE) {
-                return 'f';
-            } */
-
-            if (bind == STB_WEAK) {
-                if (type == STT_OBJECT)
-                    return sym->st_value <= 0 ? 'v' : 'V';
-                return sym->st_value <= 0 ? 'w' : 'W';
-            }
-
-            if (sym_sec->sh_type == SHT_NOBITS) {
-                return bind == STB_LOCAL ? 'b' : 'B';
-            }
-
-            if (shndx == SHN_UNDEF)
-                return 'U';
+    if (arch == ARCH_32) {
+        SET_FLAG(32);
+    } else {
+        SET_FLAG(64);
+    }
             
-            if (type == STT_NOTYPE || type == STT_OBJECT) {
-                if (readonly)
-                    return bind == STB_LOCAL ? 'r' : 'R';
-                return bind == STB_LOCAL ? 'd' : 'D';
-            }
-
-            switch (type) {
-                case STT_COMMON:
-                    return bind == STB_LOCAL ? 'c' : 'C';
-                case STT_FUNC:
-                    return bind == STB_LOCAL ? 't' : 'T';
-                default:
-                    break;
-            }
-
-            return '?';
-
     #undef SET_FLAG
 }
 
