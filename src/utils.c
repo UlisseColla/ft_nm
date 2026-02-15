@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/15 16:00:20 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 19:00:08 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,34 +45,6 @@ char *get_address(uint64_t addr, char flag, Arch arch) { /* To check for 32 bits
     return ft_strdup(ret);
 }
 
-/* Check all sizes, if bigger than file size -> print error, return 1 */
-/*
-typedef struct s_file_info {
-    char *file_name;
-    char *elf_file;
-    size_t file_size;
-    Arch arch;
-}   file_info;
-*/
-
-/*
-    typedef struct {
-        unsigned char e_ident[EI_NIDENT];   ok
-        uint16_t      e_type;
-        uint16_t      e_machine;            ok
-        uint32_t      e_version;
-        ElfN_Addr     e_entry;
-        ElfN_Off      e_phoff;              ok
-        ElfN_Off      e_shoff;              ok
-        uint32_t      e_flags;
-        uint16_t      e_ehsize;             ok
-        uint16_t      e_phentsize;
-        uint16_t      e_phnum;
-        uint16_t      e_shentsize;          ok
-        uint16_t      e_shnum;
-        uint16_t      e_shstrndx;
-    } ElfN_Ehdr;
-*/
 static int check_elf(file_info *info) {
     
     /* Check for leaks in get_address */

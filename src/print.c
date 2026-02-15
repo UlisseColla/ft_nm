@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:18:32 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/15 17:12:43 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 17:22:23 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 static void print_line(symbol s, Arch arch) {
     int format = arch == ARCH_32? 8 : 16;
-    if (s.name == NULL) return;
+    if (s.name == NULL || ft_strlen(s.name) == 0) return;
     if (s.address != NULL) {
         for (int i = 0; i < (format - (int)ft_strlen(s.address)); i++) {
             write(1, "0", 1);

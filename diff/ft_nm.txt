@@ -1,114 +1,85 @@
-                 U 
-0000000000000000 a 
 000000000000038c r __abi_tag
-00000000000022a4 T args_lexer
-0000000000000000 a args_lexer.c
+0000000000002865 T args_lexer
 0000000000007010 B __bss_start
-0000000000001d88 t check_arch
-00000000000018c9 t check_elf
-0000000000003479 t check_type
-000000000000205c T clear_list
+0000000000002349 t check_arch
+0000000000001e6a t check_elf
+0000000000003941 t check_type
+000000000000261d T clear_list
                  U close@GLIBC_2.2.5
-0000000000002d7b T compare_strings
+000000000000321b T compare_strings
 0000000000007010 b completed.0
-0000000000000000 a crtstuff.c
-0000000000000000 a crtstuff.c
                  w __cxa_finalize@GLIBC_2.2.5
 0000000000007000 D __data_start
 0000000000007000 W data_start
-0000000000002367 T debug_prints
-0000000000001250 t deregister_tm_clones
-00000000000031b6 t divide_by_ten
-00000000000012c0 t __do_global_dtors_aux
-0000000000006d50 d __do_global_dtors_aux_fini_array_entry
+0000000000001230 t deregister_tm_clones
+000000000000367e t divide_by_ten
+00000000000012a0 t __do_global_dtors_aux
+0000000000006d58 d __do_global_dtors_aux_fini_array_entry
 0000000000007008 D __dso_handle
-0000000000006d58 d _DYNAMIC
+0000000000006d60 d _DYNAMIC
 0000000000007010 D _edata
 0000000000007018 B _end
                  U __errno_location@GLIBC_2.2.5
                  U exit@GLIBC_2.2.5
-000000000000320a t f
-0000000000003e38 T _fini
-0000000000001300 t frame_dummy
-0000000000006d48 d __frame_dummy_init_array_entry
-0000000000004df8 r __FRAME_END__
+00000000000036d2 t f
+0000000000004300 T _fini
+00000000000012e0 t frame_dummy
+0000000000006d50 d __frame_dummy_init_array_entry
+0000000000005bb0 r __FRAME_END__
+00000000000014b7 T free_array
                  U free@GLIBC_2.2.5
+000000000000147f t free_symbol_payload
                  U fstat@GLIBC_2.33
-0000000000003d98 T ft_count_digits
-0000000000000000 a ft_count_digits.c
-00000000000032e9 T ft_itoa
-0000000000000000 a ft_itoa.c
-00000000000033b9 T ft_lstadd_back
-0000000000000000 a ft_lstadd_back.c
-0000000000003418 T ft_lstlast
-0000000000000000 a ft_lstlast.c
-000000000000333f T ft_lstnew
-0000000000000000 a ft_lstnew.c
-0000000000003388 T ft_lstsize
-0000000000000000 a ft_lstsize.c
-0000000000001454 T ft_nm
-0000000000000000 a ft_nm.c
-000000000000374c T ft_printf_fd
-0000000000000000 a ft_printf_fd.c
-0000000000003a94 t ft_putchar
-000000000000344c t ft_putchar
-0000000000003b84 t ft_putchar
-00000000000038f1 T ft_putnbr
-0000000000000000 a ft_putnbr.c
-0000000000003ac1 T ft_putnbr_base
-0000000000000000 a ft_putnbr_base.c
-0000000000003bb1 T ft_putptr
-0000000000000000 a ft_putptr.c
-0000000000003899 T ft_putstr
-0000000000000000 a ft_putstr.c
-0000000000003ca6 T ft_put_unsigned
-0000000000000000 a ft_put_unsigned.c
-0000000000003120 T ft_strdup
-0000000000000000 a ft_strdup.c
-00000000000030ed T ft_strlen
-0000000000000000 a ft_strlen.c
-0000000000003e05 T ft_strlength
-0000000000000000 a ft_strlength.c
-00000000000017c6 T get_address
-0000000000006f48 d _GLOBAL_OFFSET_TABLE_
+0000000000004260 T ft_count_digits
+00000000000037b1 T ft_itoa
+0000000000003881 T ft_lstadd_back
+00000000000038e0 T ft_lstlast
+0000000000003807 T ft_lstnew
+0000000000003850 T ft_lstsize
+000000000000152f T ft_nm
+0000000000003c14 T ft_printf_fd
+000000000000404c t ft_putchar
+0000000000003914 t ft_putchar
+0000000000003f5c t ft_putchar
+0000000000003db9 T ft_putnbr
+0000000000003f89 T ft_putnbr_base
+0000000000004079 T ft_putptr
+0000000000003d61 T ft_putstr
+000000000000416e T ft_put_unsigned
+00000000000035e8 T ft_strdup
+00000000000035b5 T ft_strlen
+00000000000042cd T ft_strlength
+0000000000001d50 T get_address
+0000000000006f50 d _GLOBAL_OFFSET_TABLE_
                  w __gmon_start__
-000000000000465c r __GNU_EH_FRAME_HDR
+0000000000005438 r __GNU_EH_FRAME_HDR
 0000000000001000 T _init
-0000000000001e70 T init_elf
-0000000000004000 R _IO_stdin_used
-00000000000021b7 T is_flag
+0000000000002431 T init_elf
+0000000000005000 R _IO_stdin_used
+0000000000002778 T is_flag
                  w _ITM_deregisterTMCloneTable
                  w _ITM_registerTMCloneTable
                  U __libc_start_main@GLIBC_2.34
-0000000000001309 T main
-0000000000000000 a main.c
+00000000000012e9 T main
                  U malloc@GLIBC_2.2.5
                  U mmap@GLIBC_2.2.5
+                 U munmap@GLIBC_2.2.5
                  U open@GLIBC_2.2.5
-0000000000002f5e T partition
+0000000000003426 T partition
                  U perror@GLIBC_2.2.5
-0000000000000000 a print.c
-00000000000023e8 T print_ekh_header
-00000000000020a7 T print_error_message
-                 U printf@GLIBC_2.2.5
-00000000000026a3 T print_line
-0000000000002581 T print_sec_64eader
-000000000000278b T print_symbols
-00000000000029a1 T print_symbols_r
-                 U puts@GLIBC_2.2.5
-0000000000003087 T quick_sort
-0000000000000000 a quick_sort.c
-0000000000001280 t register_tm_clones
-0000000000000000 a Scrt1.o
-0000000000002bb7 T set_flag
-0000000000000000 a set_flag.c
-00000000000020f4 T set_flag_if_valid
+0000000000002668 T print_error_message
+0000000000002928 t print_line
+0000000000002a3d T print_symbols
+0000000000002c6a T print_symbols_r
+000000000000354f T quick_sort
+0000000000001260 t register_tm_clones
+0000000000002e97 T set_flag
+00000000000026b5 T set_flag_if_valid
                  U __stack_chk_fail@GLIBC_2.4
-0000000000001220 T _start
+0000000000001200 T _start
                  U strcmp@GLIBC_2.2.5
                  U strerror@GLIBC_2.2.5
-0000000000002eda T swap_symbols
+00000000000033a2 T swap_symbols
 0000000000007010 D __TMC_END__
-0000000000002d57 t to_lower
-0000000000000000 a utils.c
+00000000000031f7 t to_lower
                  U write@GLIBC_2.2.5

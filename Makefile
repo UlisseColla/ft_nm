@@ -63,10 +63,10 @@ valgrind:
 	clear && valgrind --leak-check=full ./ft_nm $(TEST)
 
 test_ft_nm:
-	clear && ./ft_nm $(TEST) -a > ./diff/ft_nm.txt
+	clear && ./ft_nm $(TEST) > ./diff/ft_nm.txt
 
 test_nm: 
-	clear & nm $(TEST) -a > ./diff/nm.txt
+	clear & nm $(TEST) > ./diff/nm.txt
 
 diff: test_nm test_ft_nm
 	@diff ./diff/nm.txt ./diff/ft_nm.txt;	\

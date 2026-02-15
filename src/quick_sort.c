@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 18:57:35 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/15 17:12:55 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 18:00:41 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int compare_strings(char *s1, char *s2) {
     char *c2 = s2;
     
     while(c1[i] && c2[l]) {
-        while(c1[i] && c1[i] == '_') i++;
-        while(c2[l] && c2[l] == '_') l++;
+        while(c1[i] && (c1[i] == '_' || c1[i] == '@')) i++;
+        while(c2[l] && (c2[l] == '_' || c2[l] == '@')) l++;
         if (to_lower(c1[i]) != to_lower(c2[l])) break;
         i++;
         l++;

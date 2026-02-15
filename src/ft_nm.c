@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:29:31 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/15 17:11:51 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/02/15 17:28:38 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void free_array(void *array, size_t size, size_t elem_size, void (*del)(void *))
 int ft_nm(file_info *info, Flags flags) {
     int symbols_count = 0;
     symbol *sym_struct_array = NULL;
-
-    ft_printf_fd(1, "%s:\n", info->file_name);
     
     #define PROCESS_ELF(base) \
         elf_ ## base *header = (elf_ ## base *)info->elf_file; \
