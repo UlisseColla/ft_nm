@@ -9,7 +9,7 @@
 < 0000000000001530 t _create_client_alloc
 < 0000000000001400 t _create_zone
 < 00000000000029d0 t _ctrl_c_handler
-<                  w __cxa_finalize@GLIBC_2.2.5
+<                  U __cxa_finalize@GLIBC_2.2.5
 < 0000000000001190 t deregister_tm_clones
 < 0000000000001220 t __do_global_dtors_aux
 < 0000000000005e10 d __do_global_dtors_aux_fini_array_entry
@@ -44,14 +44,14 @@
 < 0000000000002680 t _getZoneSize
 < 0000000000006000 d _GLOBAL_OFFSET_TABLE_
 < 00000000000060d8 b g_mnode
-<                  w __gmon_start__
+<                  U __gmon_start__
 < 00000000000060e8 b g_mutex
 < 0000000000004118 r __GNU_EH_FRAME_HDR
 < 0000000000001000 T _init
 < 00000000000029a0 t _initializer
 < 00000000000022a0 t _is_same_type
-<                  w _ITM_deregisterTMCloneTable
-<                  w _ITM_registerTMCloneTable
+<                  U _ITM_deregisterTMCloneTable
+<                  U _ITM_registerTMCloneTable
 < 0000000000001270 T malloc
 <                  U memset@GLIBC_2.2.5
 <                  U mmap@GLIBC_2.2.5

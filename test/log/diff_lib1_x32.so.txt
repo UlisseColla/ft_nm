@@ -1,0 +1,14 @@
+11c11
+<          U __cxa_finalize@GLIBC_2.1.3
+---
+>          w __cxa_finalize@GLIBC_2.1.3
+46c46
+<          U __gmon_start__
+---
+>          w __gmon_start__
+51,52c51,52
+<          U _ITM_deregisterTMCloneTable
+<          U _ITM_registerTMCloneTable
+---
+>          w _ITM_deregisterTMCloneTable
+>          w _ITM_registerTMCloneTable

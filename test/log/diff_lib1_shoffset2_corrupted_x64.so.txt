@@ -1,7 +1,21 @@
+11c11
+<                  U __cxa_finalize@GLIBC_2.2.5
+---
+>                  w __cxa_finalize@GLIBC_2.2.5
 25d24
 < 0000000000001c00 T free
 26a26
 > 0000000000001c00 T free
+46c46
+<                  U __gmon_start__
+---
+>                  w __gmon_start__
+52,53c52,53
+<                  U _ITM_deregisterTMCloneTable
+<                  U _ITM_registerTMCloneTable
+---
+>                  w _ITM_deregisterTMCloneTable
+>                  w _ITM_registerTMCloneTable
 66d65
 < 0000000000001ec0 T realloc
 67a67

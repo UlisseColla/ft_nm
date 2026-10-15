@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
-/*   Updated: 2026/10/15 14:07:57 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/10/15 17:44:32 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ static int check_elf(file_info *info) {
             }                                                                                                                                                       \
             if (header->e_ident[EI_CLASS] != ELFCLASS ## base &&                                                                                                    \
                 header->e_ident[EI_DATA] != ELFDATA2LSB &&                                                                                                          \
-                header->e_type != ET_EXEC &&                                                                                                                        \
-                header->e_type != ET_DYN) {                                                                                                                         \
+                (header->e_type != ET_EXEC || header->e_type != ET_REL ||                                                                                           \
+                header->e_type != ET_DYN)) {                                                                                                                        \
                     return ft_printf_fd(2, "Symbol table or string table not found\n");                                                                             \
             }                                                                                                                                                       \
             if (header->e_shnum >= SHN_LORESERVE) return ft_printf_fd(2, "Too many sections\n");                                                                    \
@@ -134,6 +134,16 @@ int init_elf(file_info *info, char *file_path) {
     info->file_name = file_path;
     if (fstat(fd, &file_stat) == -1) {
         perror("Couldn't get file size\n");
+        close(fd);
+        return 1;
+    }
+    if (S_ISDIR(file_stat.st_mode)) {
+        ft_printf_fd(2, "ft_nm: Warning: '%s' is a directory\n", file_path);
+        close(fd);
+        return 1;
+    }
+    if (file_stat.st_size < (off_t)sizeof(elf_32)) {
+        ft_printf_fd(2, "ft_nm: %s: File format not recognized\n", file_path);
         close(fd);
         return 1;
     }
