@@ -1,0 +1,2 @@
+bfd plugin: test/obj/obj3_shnum_corrupted_x64.o: file too short
+bfd plugin: LLVM gold plugin has failed to create LTO module: section table goes past the end of file

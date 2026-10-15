@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:13:08 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/15 18:56:01 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/10/15 13:54:33 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int main(int ac, char **av) {
     if (list_size == 0) {
         file_info info = {};
         status = init_elf(&info, "./a.out");
+        status = ft_nm(&info, flags);
         if (status == 1) return status;
     } else {
         t_list *cursor = files;

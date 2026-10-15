@@ -1,0 +1,7 @@
+clear & nm ./ft_nm  > ./diff/nm.txt
+[H[2J[3Jclear && ./ft_nm ./ft_nm  > ./diff/ft_nm.txt
+[H[2J[3J40a41
+> 000000000000404c t ft_putchar
+43d43
+< 000000000000404c t ft_putchar
+1

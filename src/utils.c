@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 18:47:25 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/15 19:00:08 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/10/15 14:07:57 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int check_elf(file_info *info) {
             if (sizeof(elf_ ## base) >= info->file_size) {                                                                                                          \
                 return ft_printf_fd(2, "Symbol table or string table not found\n");                                                                                 \
             }                                                                                                                                                       \
-            if (header->e_ident[EI_CLASS] != ELFCLASS64 &&                                                                                                          \
+            if (header->e_ident[EI_CLASS] != ELFCLASS ## base &&                                                                                                    \
                 header->e_ident[EI_DATA] != ELFDATA2LSB &&                                                                                                          \
                 header->e_type != ET_EXEC &&                                                                                                                        \
                 header->e_type != ET_DYN) {                                                                                                                         \
@@ -125,7 +125,6 @@ int init_elf(file_info *info, char *file_path) {
     struct stat file_stat;
     int fd = open(file_path, O_RDONLY, S_IWUSR | S_IRUSR);
     char *file_bytes = NULL;
-    int ret = 0;
     
     if (fd == -1) {
         ft_printf_fd(2, "nm: \'%s\' : %s\n", file_path, strerror(errno));
@@ -149,8 +148,8 @@ int init_elf(file_info *info, char *file_path) {
     info->elf_file = file_bytes;
     close(fd);
 
-    ret = check_arch((unsigned char *)file_bytes, info);
-    ret = check_elf(info);
+    if (check_arch((unsigned char *)file_bytes, info) != 0)
+        return 1;
     
-    return ret;
+    return check_elf(info);
 }

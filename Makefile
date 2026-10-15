@@ -125,7 +125,7 @@ valgrind:
 test_ft_nm:
 	clear && ./ft_nm $(TEST) > ./diff/ft_nm.txt
 
-test_nm: 
+test_nm:
 	clear & nm $(TEST) > ./diff/nm.txt
 
 diff: test_nm test_ft_nm

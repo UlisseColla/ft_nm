@@ -1,0 +1,1 @@
+bfd plugin: test/lib/lib1_shname_corrupted_x64.so: ELF section name out of range

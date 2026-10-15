@@ -1,0 +1,2 @@
+bfd plugin: test/obj/obj2_eshoff3_corrupted_x64.o: file too short
+bfd plugin: LLVM gold plugin has failed to create LTO module: section header table goes past the end of the file: e_shoff = 0xf7f8

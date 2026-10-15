@@ -21,7 +21,7 @@ if [ $dir = 'test' -o $dir = 'src' ]; then
 elif [ $dir = 'ft_nm' ]; then
 	cd .
 else
-	echo "you are'nt in a good directory, go to ft_nm/";
+	echo "You are not in the right directory, go to ft_nm/";
 	exit;
 fi
 
@@ -42,7 +42,7 @@ objs32=($OBJ*_x32.o)
 
 
 print_help () {
-	echo "usage:  ./run_test.sh [ -bloa ] [ --bonus [ -agurp ] ]
+	echo "usage:  ./run_test.sh [ -bloa ] [ --bonus ] [ -agurp ]
 
   --help  prints this help
   OPTIONS:

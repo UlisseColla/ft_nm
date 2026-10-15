@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 15:15:55 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/15 17:11:42 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/10/15 13:55:19 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool set_flag_if_valid(char c, Flags *flags) {
 enum lexer_status is_flag(char *str, Flags *flags) {
     int i = 1;
 
-    if (str[0] != '-' || (strcmp("-", &str[0]) == 0 && ft_strlen(str) == 1)) {
+    if (str[0] != '-' || (ft_strncmp("-", &str[0], 1) == 0 && ft_strlen(str) == 1)) {
         return FILENAME;
     }
 

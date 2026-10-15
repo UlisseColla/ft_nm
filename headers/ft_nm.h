@@ -6,7 +6,7 @@
 /*   By: ucolla <ucolla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 19:07:11 by ucolla            #+#    #+#             */
-/*   Updated: 2026/02/14 19:02:32 by ucolla           ###   ########.fr       */
+/*   Updated: 2026/10/15 14:05:42 by ucolla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <elf.h>
 #include "ft_printf_fd.h"
 #include "libft.h"
-#include "./elf.h"
 
 typedef enum architecture {
     ARCH_32, ARCH_64 

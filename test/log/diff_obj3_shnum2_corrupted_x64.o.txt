@@ -1,0 +1,1 @@
+bad return value: ft_nm->0 - nm->1

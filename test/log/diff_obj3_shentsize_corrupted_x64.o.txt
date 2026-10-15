@@ -1,0 +1,23 @@
+1,20c1
+< 0000000000000240 t _addZone
+< 00000000000002c0 t _create_client_alloc
+< 0000000000000190 t _create_zone
+<                  U ft_memcpy
+<                  U ft_memset
+< 0000000000000340 t _getAlloc
+<                  U _getenv_cached
+< 00000000000000f0 t _getZone
+<                  U _getZoneSize
+<                  U g_mnode
+<                  U g_mutex
+< 0000000000000000 T malloc
+<                  U memset
+<                  U mmap
+<                  U _mnode_init
+<                  U pthread_mutex_lock
+<                  U pthread_mutex_unlock
+< 0000000000000530 t _setAlloc
+<                  U _setAllocType
+<                  U _updateVacantMax
+---
+> bfd plugin: LLVM gold plugin has failed to create LTO module: invalid e_shentsize in ELF header: 240
